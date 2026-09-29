@@ -1,6 +1,6 @@
-@extends('layouts.app')
+@extends('admin.layouts.admin')
 @section('title', $title)
-@section('subtitle', $subtitle)
+@section('heading', __('messages.admin_users_edit_subtitle', ['name' => $user->name]))
 @section('content')
 <div class="row justify-content-center">
   <div class="col-md-8 col-lg-6">

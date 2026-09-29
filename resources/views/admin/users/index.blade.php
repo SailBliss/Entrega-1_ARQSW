@@ -1,9 +1,8 @@
-@extends('layouts.app')
+@extends('admin.layouts.admin')
 @section('title', $title)
-@section('subtitle', $subtitle)
+@section('heading', __('messages.admin_users_title'))
 @section('content')
-<div class="d-flex justify-content-between align-items-center mb-3">
-  <h3 class="mb-0">{{ __('messages.admin_users_title') }}</h3>
+<div class="mb-3">
   <a href="{{ route('admin.users.create') }}" class="btn btn-primary">
     + {{ __('messages.admin_users_btn_create') }}
   </a>

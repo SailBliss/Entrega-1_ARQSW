@@ -39,17 +39,17 @@ class AdminUserController extends Controller
             'is_admin' => 'nullable|boolean',
         ]);
 
-        $userData = [
+        $user = new User([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'password' => $validated['password'],
-        ];
+        ]);
 
         if (Schema::hasColumn('users', 'is_admin')) {
-            $userData['is_admin'] = $request->boolean('is_admin');
+            $user->is_admin = $request->boolean('is_admin');
         }
 
-        User::create($userData);
+        $user->save();
 
         return redirect()->route('admin.users.index')
             ->with('success', __('messages.admin_users_created'));

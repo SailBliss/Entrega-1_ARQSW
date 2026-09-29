@@ -16,6 +16,12 @@ class DatabaseSeeder extends Seeder
             'password' => 'password',
         ]);
 
+        User::factory()->admin()->create([
+            'name' => 'Administrador',
+            'email' => 'admin@example.com',
+            'password' => 'password',
+        ]);
+
         $watches = [
             ['Casio F-91W', 'Casio', 'Clásico digital con cronómetro, alarma diaria y correa de resina.', 95000, 25],
             ['Casio G-Shock GA-2100', 'Casio', 'Caja octagonal "CasiOak", resistente a golpes y a 200 m de agua.', 420000, 12],
