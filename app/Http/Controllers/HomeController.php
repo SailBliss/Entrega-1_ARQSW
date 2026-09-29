@@ -10,8 +10,8 @@ class HomeController extends Controller
     public function index(): View
     {
         return view('home.index', [
-            'title' => 'Inicio - Tienda Relojes',
-            'subtitle' => 'Relojes para cada momento',
+            'title' => __('messages.home_title'),
+            'subtitle' => __('messages.home_subtitle'),
             'featured' => Watch::latest('id')->take(4)->get(),
         ]);
     }

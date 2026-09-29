@@ -12,7 +12,7 @@ class AuthController extends Controller
 {
     public function showRegister(): View
     {
-        return view('auth.register', ['title' => 'Registrarse - Tienda Relojes', 'subtitle' => 'Crear cuenta']);
+        return view('auth.register', ['title' => __('messages.auth_register_title'), 'subtitle' => __('messages.auth_register_subtitle')]);
     }
 
     public function register(Request $request): RedirectResponse
@@ -28,12 +28,12 @@ class AuthController extends Controller
         Auth::login($user);
         $request->session()->regenerate();
 
-        return redirect()->route('home.index')->with('success', '¡Cuenta creada! Bienvenido.');
+        return redirect()->route('home.index')->with('success', __('messages.auth_registered_success'));
     }
 
     public function showLogin(): View
     {
-        return view('auth.login', ['title' => 'Iniciar sesión - Tienda Relojes', 'subtitle' => 'Iniciar sesión']);
+        return view('auth.login', ['title' => __('messages.auth_login_title'), 'subtitle' => __('messages.auth_login_subtitle')]);
     }
 
     public function login(Request $request): RedirectResponse
@@ -44,12 +44,12 @@ class AuthController extends Controller
         ]);
 
         if (! Auth::attempt($credentials, $request->boolean('remember'))) {
-            return back()->withErrors(['email' => 'Correo o contraseña incorrectos.'])->onlyInput('email');
+            return back()->withErrors(['email' => __('messages.auth_failed')])->onlyInput('email');
         }
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('home.index'))->with('success', 'Sesión iniciada.');
+        return redirect()->intended(route('home.index'))->with('success', __('messages.auth_logged_in'));
     }
 
     public function logout(Request $request): RedirectResponse
@@ -58,6 +58,6 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('home.index')->with('success', 'Sesión cerrada.');
+        return redirect()->route('home.index')->with('success', __('messages.auth_logged_out'));
     }
 }

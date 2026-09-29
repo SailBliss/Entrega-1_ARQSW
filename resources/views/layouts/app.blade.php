@@ -11,29 +11,29 @@
   
   <nav class="navbar navbar-expand-lg navbar-dark bg-secondary py-4">
     <div class="container">
-      <a class="navbar-brand" href="{{ route('home.index') }}">Tienda Relojes</a>
+      <a class="navbar-brand" href="{{ route('home.index') }}">{{ __('messages.app_name') }}</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <form class="d-flex ms-lg-4 my-2 my-lg-0" method="GET" action="{{ route('watch.index') }}">
-          <input class="form-control me-2" type="search" name="q" value="{{ request('q') }}" placeholder="Buscar reloj..." aria-label="Buscar" />
-          <button class="btn btn-outline-light" type="submit">Buscar</button>
+          <input class="form-control me-2" type="search" name="q" value="{{ request('q') }}" placeholder="{{ __('messages.search_placeholder') }}" aria-label="{{ __('messages.search_button') }}" />
+          <button class="btn btn-outline-light" type="submit">{{ __('messages.search_button') }}</button>
         </form>
         <div class="navbar-nav ms-auto">
-          <a class="nav-link active" href="{{ route('home.index') }}">Inicio</a>
-          <a class="nav-link active" href="{{ route('watch.index') }}">Relojes</a>
+          <a class="nav-link active" href="{{ route('home.index') }}">{{ __('messages.nav_home') }}</a>
+          <a class="nav-link active" href="{{ route('watch.index') }}">{{ __('messages.nav_watches') }}</a>
           @auth
-            <a class="nav-link active" href="{{ route('wishlist.index') }}">Deseados</a>
-            <a class="nav-link active" href="{{ route('cart.index') }}">Carrito ({{ auth()->user()->cartItems()->sum('quantity') }})</a>
+            <a class="nav-link active" href="{{ route('wishlist.index') }}">{{ __('messages.nav_wishlist') }}</a>
+            <a class="nav-link active" href="{{ route('cart.index') }}">{{ __('messages.nav_cart', ['count' => auth()->user()->cartItems()->sum('quantity')]) }}</a>
             <form method="POST" action="{{ route('logout') }}" class="d-inline">
               @csrf
-              <button type="submit" class="nav-link active btn btn-link">Cerrar sesión ({{ auth()->user()->name }})</button>
+              <button type="submit" class="nav-link active btn btn-link">{{ __('messages.nav_logout', ['name' => auth()->user()->name]) }}</button>
             </form>
           @else
-            <a class="nav-link active" href="{{ route('login') }}">Iniciar sesión</a>
-            <a class="nav-link active" href="{{ route('register') }}">Registrarse</a>
+            <a class="nav-link active" href="{{ route('login') }}">{{ __('messages.nav_login') }}</a>
+            <a class="nav-link active" href="{{ route('register') }}">{{ __('messages.nav_register') }}</a>
           @endauth
         </div>
       </div>
@@ -42,7 +42,7 @@
 
   <header class="masthead bg-primary text-white text-center py-4">
     <div class="container d-flex align-items-center flex-column">
-      <h2>@yield('subtitle', 'Relojes para cada momento')</h2>
+      <h2>@yield('subtitle', __('messages.home_subtitle'))</h2>
     </div>
   </header>
   
@@ -65,7 +65,7 @@
   
   <div class="copyright py-4 text-center text-white">
     <div class="container">
-      <small>Tienda Relojes &copy; {{ date('Y') }}</small>
+      <small>{{ __('messages.footer_copyright', ['year' => date('Y')]) }}</small>
     </div>
   </div>
   

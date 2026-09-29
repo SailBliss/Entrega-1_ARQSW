@@ -3,8 +3,8 @@
 @section('subtitle', $subtitle)
 @section('content')
 @if($items->isEmpty())
-  <p class="text-center lead">Tu lista de deseados está vacía.</p>
-  <div class="text-center"><a href="{{ route('watch.index') }}" class="btn bg-primary text-white">Ir al catálogo</a></div>
+  <p class="text-center lead">{{ __('messages.wishlist_empty') }}</p>
+  <div class="text-center"><a href="{{ route('watch.index') }}" class="btn bg-primary text-white">{{ __('messages.cart_go_catalog') }}</a></div>
 @else
   <div class="row">
     @foreach($items as $item)

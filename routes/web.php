@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
@@ -32,4 +33,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
     Route::post('/wishlist/add/{watch}', [WishlistController::class, 'add'])->name('wishlist.add');
     Route::delete('/wishlist/remove/{watch}', [WishlistController::class, 'remove'])->name('wishlist.remove');
+});
+
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::resource('users', AdminUserController::class);
 });
