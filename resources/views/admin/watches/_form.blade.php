@@ -1,3 +1,4 @@
+{{-- Nicolas Ortiz --}}
 <div class="mb-3">
   <label for="name" class="form-label">{{ __('messages.admin_watches_field_name') }}</label>
   <input type="text" class="form-control" id="name" name="name" value="{{ old('name', $watch->name) }}" required />

@@ -1,5 +1,7 @@
 <?php
 
+// Isabela Ruiz, Nicolas Ortiz, Miguel Angel Rendon
+
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;

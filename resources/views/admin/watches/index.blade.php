@@ -1,3 +1,4 @@
+{{-- Nicolas Ortiz --}}
 @extends('admin.layouts.admin')
 @section('title', $title)
 @section('heading', __('messages.nav_watches'))

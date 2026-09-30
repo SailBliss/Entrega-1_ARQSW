@@ -1,5 +1,7 @@
 <?php
 
+// Isabela Ruiz, Miguel Angel Rendon
+
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;

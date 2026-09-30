@@ -1,5 +1,7 @@
 <?php
 
+// Isabela Ruiz, Nicolas Ortiz
+
 namespace Database\Seeders;
 
 use App\Models\User;

@@ -1,3 +1,4 @@
+{{-- Isabela Ruiz, Nicolas Ortiz, Miguel Angel Rendon --}}
 @extends('layouts.app')
 @section('title', $title)
 @section('content')

@@ -1,3 +1,4 @@
+{{-- Miguel Angel Rendon --}}
 @extends('admin.layouts.admin')
 @section('title', $title)
 @section('heading', __('messages.admin_users_edit_subtitle', ['name' => $user->name]))

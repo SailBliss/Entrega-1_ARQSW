@@ -1,3 +1,4 @@
+{{-- Isabela Ruiz, Nicolas Ortiz, Miguel Angel Rendon --}}
 <div class="col-md-6 col-lg-3 mb-4">
   <div class="card card-watch">
     <a href="{{ route('watch.show', $watch) }}" class="watch-img-wrap text-decoration-none">

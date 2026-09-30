@@ -1,5 +1,7 @@
 <?php
 
+// Miguel Angel Rendon
+
 return [
     // General y layout
     'app_name' => 'Tienda Relojes',

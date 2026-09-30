@@ -76,6 +76,12 @@ Estas credenciales son exclusivamente para desarrollo y deben reemplazarse en un
 
 El proyecto administra el esquema mediante migraciones y contiene modelos para usuarios, relojes, elementos del carrito, elementos de la lista de deseos, pedidos y elementos de pedido. Las relaciones del dominio están implementadas en ambos extremos con Eloquent. `DatabaseSeeder` crea usuarios de demostración y doce relojes ficticios.
 
+Después de ejecutar las migraciones, también puede importar el respaldo MySQL de datos ficticios:
+
+```bash
+mysql -u root -p tienda_relojes < database/seed-data.sql
+```
+
 ## Calidad y pruebas
 
 Las pruebas se ejecutan con una base SQLite en memoria para mantenerlas aisladas. La aplicación continúa configurada para MySQL.
