@@ -12,8 +12,8 @@ class WishlistController extends Controller
     public function index(Request $request): View
     {
         return view('wishlist.index', [
-            'title' => 'Lista de deseados - Tienda Relojes',
-            'subtitle' => 'Lista de deseados',
+            'title' => __('messages.wishlist_title'),
+            'subtitle' => __('messages.wishlist_subtitle'),
             'items' => $request->user()->wishlistItems()->with('watch')->latest()->get(),
         ]);
     }
@@ -22,13 +22,13 @@ class WishlistController extends Controller
     {
         $request->user()->wishlistItems()->firstOrCreate(['watch_id' => $watch->id]);
 
-        return back()->with('success', 'Añadido a tu lista de deseados.');
+        return back()->with('success', __('messages.wishlist_added'));
     }
 
     public function remove(Request $request, Watch $watch): RedirectResponse
     {
         $request->user()->wishlistItems()->where('watch_id', $watch->id)->delete();
 
-        return back()->with('success', 'Quitado de tu lista de deseados.');
+        return back()->with('success', __('messages.wishlist_removed'));
     }
 }

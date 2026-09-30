@@ -1,59 +1,119 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Sync — Tienda de relojes
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Aplicación web académica desarrollada con Laravel 12 y MySQL. Sync ofrece un catálogo público de relojes, autenticación, lista de deseos, carrito con control de inventario, generación de pedidos y un panel administrativo separado para gestionar relojes y usuarios.
 
-## About Laravel
+## Integrantes
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Isabela Ruiz de la Ossa
+- Nicolás Ortiz Álvarez
+- Miguel Ángel Rendón Quintero
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Requisitos
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- PHP 8.2 o superior, con las extensiones requeridas por Laravel y MySQL.
+- Composer 2.
+- Node.js 20 o superior y npm.
+- MySQL 8 o compatible.
 
-## Learning Laravel
+## Instalación local
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+```bash
+git clone https://github.com/SailBliss/Entrega-1_ARQSW.git
+cd Entrega-1_ARQSW
+composer install
+npm install
+cp .env.example .env
+php artisan key:generate
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+En Windows PowerShell, el archivo de entorno se puede crear con:
 
-## Laravel Sponsors
+```powershell
+Copy-Item .env.example .env
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Cree una base de datos MySQL llamada `tienda_relojes` y configure en `.env` las variables `DB_HOST`, `DB_PORT`, `DB_DATABASE`, `DB_USERNAME` y `DB_PASSWORD`. Después ejecute:
 
-### Premium Partners
+```bash
+php artisan migrate --seed
+npm run build
+php artisan serve
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+La ruta principal es `http://127.0.0.1:8000/`. El panel administrativo se encuentra en `http://127.0.0.1:8000/admin`.
 
-## Contributing
+## Usuarios de demostración
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Los seeders crean estas cuentas locales:
 
-## Code of Conduct
+| Rol | Correo | Contraseña |
+| --- | --- | --- |
+| Administrador | `admin@example.com` | `password` |
+| Usuario | `demo@example.com` | `password` |
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Estas credenciales son exclusivamente para desarrollo y deben reemplazarse en un despliegue real.
 
-## Security Vulnerabilities
+## Funcionalidades
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Usuario final
 
-## License
+- Catálogo, detalle y búsqueda por nombre, marca o descripción.
+- Registro, inicio y cierre de sesión.
+- Lista de deseos personal.
+- Carrito por usuario con cantidades y validación de existencias.
+- Compra transaccional: crea el pedido, descuenta inventario y vacía el carrito.
+- Interfaz independiente del panel administrativo.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Administración
+
+- Acceso restringido por middleware y rol de administrador.
+- CRUD completo de relojes.
+- CRUD completo de usuarios.
+- Protección contra eliminación de relojes asociados a pedidos.
+- Protección contra eliminación de la cuenta administrativa en uso.
+
+## Base de datos
+
+El proyecto administra el esquema mediante migraciones y contiene modelos para usuarios, relojes, elementos del carrito, elementos de la lista de deseos, pedidos y elementos de pedido. Las relaciones del dominio están implementadas en ambos extremos con Eloquent. `DatabaseSeeder` crea usuarios de demostración y doce relojes ficticios.
+
+## Calidad y pruebas
+
+Las pruebas se ejecutan con una base SQLite en memoria para mantenerlas aisladas. La aplicación continúa configurada para MySQL.
+
+```bash
+php artisan test
+vendor/bin/pint --test
+npm run build
+```
+
+En Windows, Laravel Pint también puede ejecutarse con `vendor\bin\pint --test`.
+
+## Estructura principal
+
+```text
+app/
+├── Http/Controllers/       # Controladores públicos y administrativos
+├── Http/Middleware/        # Autorización administrativa
+└── Models/                 # Entidades y relaciones Eloquent
+database/
+├── factories/
+├── migrations/
+└── seeders/
+resources/
+├── lang/es/                # Textos visibles de la aplicación
+└── views/
+    ├── admin/              # Interfaz administrativa independiente
+    ├── auth/
+    ├── cart/
+    ├── home/
+    ├── watch/
+    └── wishlist/
+routes/web.php
+tests/Feature/
+```
+
+## Documentación del proyecto
+
+La identidad del equipo, el modelo verbal, los diagramas de clases y arquitectura MVC, la guía de estilo, las reglas de programación y las funcionalidades interesantes se encuentran en la [Wiki del repositorio](https://github.com/SailBliss/Entrega-1_ARQSW/wiki).
+
+El trabajo del equipo se organiza en el [proyecto Backlog](https://github.com/users/SailBliss/projects/3) y en los issues del repositorio.

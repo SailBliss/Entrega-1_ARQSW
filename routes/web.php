@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AdminWatchController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
@@ -38,4 +39,5 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::redirect('/', '/admin/watches')->name('dashboard');
     Route::resource('watches', AdminWatchController::class)->except('show');
+    Route::resource('users', AdminUserController::class);
 });

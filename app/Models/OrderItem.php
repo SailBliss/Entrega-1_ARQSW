@@ -9,6 +9,11 @@ class OrderItem extends Model
 {
     protected $fillable = ['order_id', 'watch_id', 'quantity', 'price'];
 
+    public function order(): BelongsTo
+    {
+        return $this->belongsTo(Order::class);
+    }
+
     public function watch(): BelongsTo
     {
         return $this->belongsTo(Watch::class);

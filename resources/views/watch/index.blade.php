@@ -5,16 +5,16 @@
   <div class="section-heading">
     <div>
       <h3 class="mb-1">{{ $subtitle }}</h3>
-      <p>Explora por marca, estilo o simplemente déjate llevar.</p>
+      <p>{{ __('messages.watches_explore') }}</p>
     </div>
   </div>
 
   @if($watches->isEmpty())
     <div class="empty-state">
       <i class="bi bi-search"></i>
-      <h5>No se encontraron relojes.</h5>
-      <p>Prueba con otra marca o palabra clave.</p>
-      <a href="{{ route('watch.index') }}" class="btn btn-brand">Ver todos</a>
+      <h5>{{ __('messages.watches_not_found') }}</h5>
+      <p>{{ __('messages.watches_not_found_help') }}</p>
+      <a href="{{ route('watch.index') }}" class="btn btn-brand">{{ __('messages.see_all') }}</a>
     </div>
   @else
     <div class="row">

@@ -12,7 +12,7 @@ class AdminWatchController extends Controller
     public function index(): View
     {
         return view('admin.watches.index', [
-            'title' => 'Relojes - Panel de administración',
+            'title' => __('messages.admin_watches_title'),
             'watches' => Watch::orderBy('brand')->orderBy('name')->get(),
         ]);
     }
@@ -20,7 +20,7 @@ class AdminWatchController extends Controller
     public function create(): View
     {
         return view('admin.watches.create', [
-            'title' => 'Nuevo reloj - Panel de administración',
+            'title' => __('messages.admin_watches_create_title'),
             'watch' => new Watch,
         ]);
     }
@@ -30,13 +30,13 @@ class AdminWatchController extends Controller
         $watch = Watch::create($this->validated($request));
 
         return redirect()->route('admin.watches.index')
-            ->with('success', 'Reloj "'.$watch->name.'" creado correctamente.');
+            ->with('success', __('messages.admin_watches_created', ['name' => $watch->name]));
     }
 
     public function edit(Watch $watch): View
     {
         return view('admin.watches.edit', [
-            'title' => 'Editar reloj - Panel de administración',
+            'title' => __('messages.admin_watches_edit_title'),
             'watch' => $watch,
         ]);
     }
@@ -46,20 +46,20 @@ class AdminWatchController extends Controller
         $watch->update($this->validated($request));
 
         return redirect()->route('admin.watches.index')
-            ->with('success', 'Reloj "'.$watch->name.'" actualizado correctamente.');
+            ->with('success', __('messages.admin_watches_updated', ['name' => $watch->name]));
     }
 
     public function destroy(Watch $watch): RedirectResponse
     {
         if ($watch->orderItems()->exists()) {
             return redirect()->route('admin.watches.index')
-                ->withErrors(['watch' => 'No se puede eliminar "'.$watch->name.'" porque tiene pedidos asociados.']);
+                ->withErrors(['watch' => __('messages.admin_watches_has_orders', ['name' => $watch->name])]);
         }
 
         $watch->delete();
 
         return redirect()->route('admin.watches.index')
-            ->with('success', 'Reloj "'.$watch->name.'" eliminado correctamente.');
+            ->with('success', __('messages.admin_watches_deleted', ['name' => $watch->name]));
     }
 
     private function validated(Request $request): array

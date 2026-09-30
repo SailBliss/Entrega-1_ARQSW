@@ -5,10 +5,10 @@
   <div class="container">
     <div class="row align-items-center g-5">
       <div class="col-lg-6">
-        <p class="hero-eyebrow">Piezas que cuentan tu historia</p>
-        <h1 class="hero-title mb-3">Encuentra el reloj que se siente como tuyo</h1>
-        <p class="hero-lead mb-4">Curamos relojes de marcas que confían en la mecánica bien hecha, para acompañarte en cada momento que decidas medir.</p>
-        <a href="{{ route('watch.index') }}" class="btn btn-brand">Ver el catálogo <i class="bi bi-arrow-right ms-1"></i></a>
+        <p class="hero-eyebrow">{{ __('messages.home_eyebrow') }}</p>
+        <h1 class="hero-title mb-3">{{ __('messages.home_hero_title') }}</h1>
+        <p class="hero-lead mb-4">{{ __('messages.home_hero_lead') }}</p>
+        <a href="{{ route('watch.index') }}" class="btn btn-brand">{{ __('messages.home_view_catalog') }} <i class="bi bi-arrow-right ms-1"></i></a>
       </div>
       <div class="col-lg-6">
         <div class="hero-art">
@@ -25,32 +25,32 @@
     <div class="col-md-4">
       <div class="feature">
         <div class="feature-icon"><i class="bi bi-hand-thumbs-up"></i></div>
-        <h5>Curado a mano</h5>
-        <p class="text-muted mb-0">Cada reloj pasa por nuestras manos antes de llegar a las tuyas.</p>
+        <h5>{{ __('messages.home_feature_curated') }}</h5>
+        <p class="text-muted mb-0">{{ __('messages.home_feature_curated_text') }}</p>
       </div>
     </div>
     <div class="col-md-4">
       <div class="feature">
         <div class="feature-icon"><i class="bi bi-truck"></i></div>
-        <h5>Envío cuidadoso</h5>
-        <p class="text-muted mb-0">Empacamos cada pieza como si fuera para alguien que queremos.</p>
+        <h5>{{ __('messages.home_feature_shipping') }}</h5>
+        <p class="text-muted mb-0">{{ __('messages.home_feature_shipping_text') }}</p>
       </div>
     </div>
     <div class="col-md-4">
       <div class="feature">
         <div class="feature-icon"><i class="bi bi-headset"></i></div>
-        <h5>Te acompañamos</h5>
-        <p class="text-muted mb-0">Si tienes dudas, hay una persona real lista para ayudarte.</p>
+        <h5>{{ __('messages.home_feature_support') }}</h5>
+        <p class="text-muted mb-0">{{ __('messages.home_feature_support_text') }}</p>
       </div>
     </div>
   </div>
 
   <div class="section-heading mt-5">
     <div>
-      <h3 class="mb-1">Novedades</h3>
-      <p>Lo último que sumamos a la colección.</p>
+      <h3 class="mb-1">{{ __('messages.home_news') }}</h3>
+      <p>{{ __('messages.home_news_text') }}</p>
     </div>
-    <a href="{{ route('watch.index') }}" class="btn btn-ghost">Ver todo</a>
+    <a href="{{ route('watch.index') }}" class="btn btn-ghost">{{ __('messages.home_view_all_short') }}</a>
   </div>
   <div class="row mb-5">
     @foreach($featured as $watch)

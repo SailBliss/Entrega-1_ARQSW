@@ -9,23 +9,23 @@
       <p class="watch-price mb-2">${{ number_format($watch->price, 0, ',', '.') }}</p>
       <p class="mb-3">
         @if($watch->stock > 0)
-          <span class="stock-badge" style="color: var(--accent)"><span class="stock-dot in"></span>En stock</span>
+          <span class="stock-badge" style="color: var(--accent)"><span class="stock-dot in"></span>{{ __('messages.in_stock') }}</span>
         @else
-          <span class="stock-badge" style="color: var(--danger)"><span class="stock-dot out"></span>Agotado</span>
+          <span class="stock-badge" style="color: var(--danger)"><span class="stock-dot out"></span>{{ __('messages.out_of_stock') }}</span>
         @endif
       </p>
       <div class="d-flex align-items-center gap-2">
-        <a href="{{ route('watch.show', $watch) }}" class="btn btn-brand flex-grow-1">Ver detalle</a>
+        <a href="{{ route('watch.show', $watch) }}" class="btn btn-brand flex-grow-1">{{ __('messages.view_detail') }}</a>
         @auth
           @if(in_array($watch->id, $wishlistIds ?? []))
             <form method="POST" action="{{ route('wishlist.remove', $watch) }}">
               @csrf @method('DELETE')
-              <button class="btn-heart is-active" type="submit" title="Quitar de deseados"><i class="bi bi-heart-fill"></i></button>
+              <button class="btn-heart is-active" type="submit" title="{{ __('messages.remove_from_wishlist') }}"><i class="bi bi-heart-fill"></i></button>
             </form>
           @else
             <form method="POST" action="{{ route('wishlist.add', $watch) }}">
               @csrf
-              <button class="btn-heart" type="submit" title="Añadir a deseados"><i class="bi bi-heart"></i></button>
+              <button class="btn-heart" type="submit" title="{{ __('messages.add_to_wishlist') }}"><i class="bi bi-heart"></i></button>
             </form>
           @endif
         @endauth

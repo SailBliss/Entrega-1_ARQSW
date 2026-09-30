@@ -17,8 +17,8 @@ class CartController extends Controller
         $items = $request->user()->cartItems()->with('watch')->get();
 
         return view('cart.index', [
-            'title' => 'Carrito - Tienda Relojes',
-            'subtitle' => 'Tu carrito',
+            'title' => __('messages.cart_title'),
+            'subtitle' => __('messages.cart_subtitle'),
             'items' => $items,
             'total' => $this->total($items),
         ]);
@@ -32,15 +32,15 @@ class CartController extends Controller
         $newQuantity = ($item->exists ? $item->quantity : 0) + $quantity;
 
         if ($watch->stock < 1) {
-            return back()->withErrors(['cart' => 'Este reloj está agotado.']);
+            return back()->withErrors(['cart' => __('messages.cart_out_of_stock')]);
         }
 
         $item->quantity = min($newQuantity, $watch->stock);
         $item->save();
 
         $message = $newQuantity > $watch->stock
-            ? 'Se añadió al carrito (limitado al stock disponible: '.$watch->stock.').'
-            : 'Reloj añadido al carrito.';
+            ? __('messages.cart_added_limited', ['stock' => $watch->stock])
+            : __('messages.cart_added');
 
         return back()->with('success', $message);
     }
@@ -49,14 +49,14 @@ class CartController extends Controller
     {
         $request->user()->cartItems()->where('watch_id', $watch->id)->delete();
 
-        return back()->with('success', 'Reloj quitado del carrito.');
+        return back()->with('success', __('messages.cart_removed'));
     }
 
     public function clear(Request $request): RedirectResponse
     {
         $request->user()->cartItems()->delete();
 
-        return back()->with('success', 'Carrito vaciado.');
+        return back()->with('success', __('messages.cart_cleared'));
     }
 
     public function checkout(Request $request): RedirectResponse
@@ -67,14 +67,14 @@ class CartController extends Controller
             $items = $user->cartItems()->with('watch')->get();
 
             if ($items->isEmpty()) {
-                return 'El carrito está vacío.';
+                return __('messages.cart_empty_checkout');
             }
 
             $watches = Watch::whereIn('id', $items->pluck('watch_id'))->lockForUpdate()->get()->keyBy('id');
 
             foreach ($items as $item) {
                 if ($watches[$item->watch_id]->stock < $item->quantity) {
-                    return 'No hay stock suficiente de "'.$item->watch->name.'".';
+                    return __('messages.cart_not_enough_stock', ['name' => $item->watch->name]);
                 }
             }
 
@@ -98,7 +98,7 @@ class CartController extends Controller
             return redirect()->route('cart.index')->withErrors(['cart' => $result]);
         }
 
-        return redirect()->route('orders.show', $result)->with('success', '¡Compra realizada con éxito!');
+        return redirect()->route('orders.show', $result)->with('success', __('messages.order_success'));
     }
 
     public function showOrder(Request $request, Order $order): View
@@ -106,8 +106,8 @@ class CartController extends Controller
         abort_unless($order->user_id === $request->user()->id, 404);
 
         return view('cart.order', [
-            'title' => 'Pedido #'.$order->id.' - Tienda Relojes',
-            'subtitle' => 'Pedido #'.$order->id,
+            'title' => __('messages.order_title', ['id' => $order->id]),
+            'subtitle' => __('messages.order_subtitle', ['id' => $order->id]),
             'order' => $order->load('items.watch'),
         ]);
     }

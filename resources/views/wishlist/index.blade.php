@@ -7,9 +7,9 @@
   @if($items->isEmpty())
     <div class="empty-state">
       <i class="bi bi-heart"></i>
-      <h5>Tu lista de deseados está vacía.</h5>
-      <p>Guarda aquí los relojes que te gustaría tener algún día.</p>
-      <a href="{{ route('watch.index') }}" class="btn btn-brand">Ir al catálogo</a>
+      <h5>{{ __('messages.wishlist_empty') }}</h5>
+      <p>{{ __('messages.wishlist_empty_help') }}</p>
+      <a href="{{ route('watch.index') }}" class="btn btn-brand">{{ __('messages.cart_go_catalog') }}</a>
     </div>
   @else
     <div class="row">

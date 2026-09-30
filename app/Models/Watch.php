@@ -12,6 +12,16 @@ class Watch extends Model
 
     protected $fillable = ['name', 'brand', 'description', 'price', 'stock', 'image'];
 
+    public function cartItems(): HasMany
+    {
+        return $this->hasMany(CartItem::class);
+    }
+
+    public function wishlistItems(): HasMany
+    {
+        return $this->hasMany(WishlistItem::class);
+    }
+
     public function orderItems(): HasMany
     {
         return $this->hasMany(OrderItem::class);
