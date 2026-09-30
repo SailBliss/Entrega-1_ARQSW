@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+
+  <path d="M80 6 Q100 -6 120 6 L120 36 Q100 30 80 36 Z" fill="#1a1a1a"/>
+  <path d="M80 164 Q100 170 120 164 L120 194 Q100 200 80 194 Z" fill="#1a1a1a"/><polygon points="118.4,55.7 144.3,81.6 144.3,118.4 118.4,144.3 81.6,144.3 55.7,118.4 55.7,81.6 81.6,55.7" fill="#1a1a1a" stroke="rgba(0,0,0,.2)" stroke-width="2"/><circle cx="100" cy="100" r="40" fill="none" stroke="#e5e7eb" stroke-width="3"/><circle cx="100" cy="100" r="34" fill="#111827"/>
+  <line x1="100.0" y1="68.0" x2="100.0" y2="72.0" stroke="#e5e7eb" stroke-width="2.5"/>
+  <line x1="122.6" y1="77.4" x2="119.8" y2="80.2" stroke="#e5e7eb" stroke-width="1.2"/>
+  <line x1="132.0" y1="100.0" x2="128.0" y2="100.0" stroke="#e5e7eb" stroke-width="1.2"/>
+  <line x1="122.6" y1="122.6" x2="119.8" y2="119.8" stroke="#e5e7eb" stroke-width="2.5"/>
+  <line x1="100.0" y1="132.0" x2="100.0" y2="128.0" stroke="#e5e7eb" stroke-width="1.2"/>
+  <line x1="77.4" y1="122.6" x2="80.2" y2="119.8" stroke="#e5e7eb" stroke-width="1.2"/>
+  <line x1="68.0" y1="100.0" x2="72.0" y2="100.0" stroke="#e5e7eb" stroke-width="2.5"/>
+  <line x1="77.4" y1="77.4" x2="80.2" y2="80.2" stroke="#e5e7eb" stroke-width="1.2"/>
+  <line x1="100" y1="100" x2="94.5" y2="85.0" stroke="#e5e7eb" stroke-width="4" stroke-linecap="round"/>
+  <line x1="100" y1="100" x2="123.6" y2="104.2" stroke="#e5e7eb" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="100" cy="100" r="3.5" fill="#e5e7eb"/>
+</svg>

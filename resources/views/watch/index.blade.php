@@ -1,15 +1,27 @@
 @extends('layouts.app')
 @section('title', $title)
-@section('subtitle', $subtitle)
 @section('content')
-@if($watches->isEmpty())
-  <p class="text-center lead">No se encontraron relojes.</p>
-  <div class="text-center"><a href="{{ route('watch.index') }}" class="btn bg-primary text-white">Ver todos</a></div>
-@else
-  <div class="row">
-    @foreach($watches as $watch)
-      @include('partials.watch-card')
-    @endforeach
+<div class="container my-4">
+  <div class="section-heading">
+    <div>
+      <h3 class="mb-1">{{ $subtitle }}</h3>
+      <p>Explora por marca, estilo o simplemente déjate llevar.</p>
+    </div>
   </div>
-@endif
+
+  @if($watches->isEmpty())
+    <div class="empty-state">
+      <i class="bi bi-search"></i>
+      <h5>No se encontraron relojes.</h5>
+      <p>Prueba con otra marca o palabra clave.</p>
+      <a href="{{ route('watch.index') }}" class="btn btn-brand">Ver todos</a>
+    </div>
+  @else
+    <div class="row">
+      @foreach($watches as $watch)
+        @include('partials.watch-card')
+      @endforeach
+    </div>
+  @endif
+</div>
 @endsection
