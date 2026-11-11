@@ -63,7 +63,7 @@ class BlockchainService
         $order->loadMissing('user');
 
         $watch = $item->watch;
-        $serialNumber = $this->generateSerialNumber($watch, $order->id, $item->id);
+        $serialNumber = $this->generateSerialNumber($watch);
 
         $payload = [
             'serial_number' => $serialNumber,
@@ -94,13 +94,14 @@ class BlockchainService
 
         try {
             // 1. Submit transaction to primary node
-            $txResponse = Http::timeout($this->timeout)->post("{$this->primaryNode}/transactions/new", array_merge($payload, [
-                'order_id' => $order->id,
-                'watch_id' => $watch->id,
+            $issuer = Http::timeout($this->timeout)->withToken((string) config('blockchain.issuer_token'));
+            $txResponse = $issuer->post("{$this->primaryNode}/transactions/new", [
                 'serial_number' => $serialNumber,
                 'certificate_hash' => $certificateHash,
-                'payload' => $payload,
-            ]));
+                'watch_name' => $payload['watch_name'],
+                'watch_brand' => $payload['watch_brand'],
+                'issued_at' => $payload['issued_at'],
+            ]);
 
             if (! $txResponse->successful()) {
                 Log::warning("Failed to submit blockchain transaction: {$txResponse->body()}");
@@ -109,7 +110,7 @@ class BlockchainService
             }
 
             // 2. Trigger mining on primary node (which will broadcast to peers)
-            $mineResponse = Http::timeout($this->timeout)->post("{$this->primaryNode}/mine");
+            $mineResponse = $issuer->post("{$this->primaryNode}/mine", ['certificate_hash' => $certificateHash]);
 
             if ($mineResponse->successful()) {
                 $mineData = $mineResponse->json();

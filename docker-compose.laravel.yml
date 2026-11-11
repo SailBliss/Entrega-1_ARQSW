@@ -17,6 +17,7 @@ services:
       BLOCKCHAIN_NODE_STORE: http://node_store:5001
       BLOCKCHAIN_NODE_AUDITOR: http://node_auditor:5002
       BLOCKCHAIN_NODE_NOTARY: http://node_notary:5003
+      BLOCKCHAIN_ISSUER_TOKEN: ${BLOCKCHAIN_ISSUER_TOKEN:?Define BLOCKCHAIN_ISSUER_TOKEN}
       PLANTS_API_URL: ${PLANTS_API_URL:-http://34.136.112.77/api/plantas-disponibles}
     ports:
       - "${APP_PORT:-8080}:80"

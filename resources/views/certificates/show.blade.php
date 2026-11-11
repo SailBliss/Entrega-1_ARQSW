@@ -37,7 +37,7 @@
               <span class="badge bg-dark mb-1"><i class="bi bi-link-45deg"></i> {{ __('messages.cert_blockchain_verified') }}</span>
               <h3 class="fw-bold mb-0">📜 {{ __('messages.cert_box_title') }}</h3>
             </div>
-            @if($certificate)
+            @if($isOwner)
               <span class="badge bg-secondary-subtle text-secondary border px-3 py-2">{{ __('messages.cert_order_number', ['id' => $certificate->order_id]) }}</span>
             @endif
           </div>
@@ -54,22 +54,24 @@
                 <tbody>
                   <tr>
                     <th class="text-muted py-2" style="width: 32%;">{{ __('messages.cert_serial_number') }}</th>
-                    <td class="py-2"><span class="font-monospace fs-5 fw-bold text-primary">{{ $certificate->serial_number ?? ($consensus['nodes']['store']['data']['payload']['serial_number'] ?? __('messages.cert_not_available')) }}</span></td>
+                    <td class="py-2"><span class="font-monospace fs-5 fw-bold text-primary">{{ $serial ?? ($consensus['nodes']['store']['data']['serial_number'] ?? __('messages.cert_not_available')) }}</span></td>
                   </tr>
                   <tr>
                     <th class="text-muted py-2">{{ __('messages.cert_watch_name') }}</th>
                     <td class="py-2">
-                      <strong class="fs-6">{{ $certificate->watch->brand ?? ($consensus['nodes']['store']['data']['payload']['watch_brand'] ?? '') }}</strong> 
-                      {{ $certificate->watch->name ?? ($consensus['nodes']['store']['data']['payload']['watch_name'] ?? __('messages.cert_not_available')) }}
+                      <strong class="fs-6">{{ $certificate->watch->brand ?? ($consensus['nodes']['store']['data']['watch_brand'] ?? '') }}</strong>
+                      {{ $certificate->watch->name ?? ($consensus['nodes']['store']['data']['watch_name'] ?? __('messages.cert_not_available')) }}
                     </td>
                   </tr>
+                  @if($isOwner)
                   <tr>
                     <th class="text-muted py-2">{{ __('messages.cert_buyer') }}</th>
-                    <td class="py-2">{{ $certificate->user->name ?? ($consensus['nodes']['store']['data']['payload']['buyer_name'] ?? __('messages.cert_not_available')) }}</td>
+                    <td class="py-2">{{ $certificate->user->name ?? __('messages.cert_not_available') }}</td>
                   </tr>
+                  @endif
                   <tr>
                     <th class="text-muted py-2">{{ __('messages.cert_issue_date') }}</th>
-                    <td class="py-2">{{ $certificate->created_at?->format('d/m/Y H:i:s') ?? ($consensus['nodes']['store']['data']['payload']['issued_at'] ?? __('messages.cert_not_available')) }}</td>
+                    <td class="py-2">{{ $certificate->created_at?->format('d/m/Y H:i:s') ?? ($consensus['nodes']['store']['data']['issued_at'] ?? __('messages.cert_not_available')) }}</td>
                   </tr>
                   <tr>
                     <th class="text-muted py-2">{{ __('messages.cert_block_index') }}</th>
