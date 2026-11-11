@@ -1,5 +1,7 @@
 <?php
 
+// Miguel Angel Rendon
+
 return [
     // General y layout
     'app_name' => 'Tienda Relojes',
@@ -11,18 +13,21 @@ return [
     'nav_login' => 'Iniciar sesión',
     'nav_register' => 'Registrarse',
     'nav_admin_users' => 'Admin Usuarios',
-    'search_placeholder' => 'Buscar reloj...',
+    'search_placeholder' => 'Busca tu próximo reloj...',
     'search_button' => 'Buscar',
     'footer_copyright' => 'Tienda Relojes © :year',
+    'footer_tagline' => 'Hecho con cariño para quienes coleccionan momentos. © :year',
     'available' => 'Disponibles: :count',
     'out_of_stock' => 'Agotado',
+    'in_stock' => 'En stock',
     'back_to_catalog' => '« Volver al catálogo',
     'see_all' => 'Ver todos',
     'view_detail' => 'Ver detalle',
     'add_to_cart' => 'Añadir al carrito',
     'add_to_wishlist' => 'Añadir a deseados',
     'remove_from_wishlist' => 'Quitar de deseados',
-    'guest_notice' => 'Inicia sesión para comprar o guardar en deseados.',
+    'guest_notice' => 'para comprar o guardar en deseados.',
+    'nav_logout_greeting' => 'Hola, :name · Salir',
 
     // Inicio
     'home_title' => 'Inicio - Tienda Relojes',
@@ -30,12 +35,26 @@ return [
     'home_welcome' => 'Bienvenido a Tienda Relojes. Encuentra el reloj perfecto de las mejores marcas.',
     'home_view_all' => 'Ver todos los relojes',
     'home_news' => 'Novedades',
+    'home_eyebrow' => 'Piezas que cuentan tu historia',
+    'home_hero_title' => 'Encuentra el reloj que se siente como tuyo',
+    'home_hero_lead' => 'Curamos relojes de marcas que confían en la mecánica bien hecha, para acompañarte en cada momento que decidas medir.',
+    'home_view_catalog' => 'Ver el catálogo',
+    'home_feature_curated' => 'Curado a mano',
+    'home_feature_curated_text' => 'Cada reloj pasa por nuestras manos antes de llegar a las tuyas.',
+    'home_feature_shipping' => 'Envío cuidadoso',
+    'home_feature_shipping_text' => 'Empacamos cada pieza como si fuera para alguien que queremos.',
+    'home_feature_support' => 'Te acompañamos',
+    'home_feature_support_text' => 'Si tienes dudas, hay una persona real lista para ayudarte.',
+    'home_news_text' => 'Lo último que sumamos a la colección.',
+    'home_view_all_short' => 'Ver todo',
 
     // Relojes
     'watches_title' => 'Relojes - Tienda Relojes',
     'watches_search_results' => 'Resultados para ":term"',
     'watches_catalog' => 'Catálogo de relojes',
     'watches_not_found' => 'No se encontraron relojes.',
+    'watches_explore' => 'Explora por marca, estilo o simplemente déjate llevar.',
+    'watches_not_found_help' => 'Prueba con otra marca o palabra clave.',
 
     // Autenticación
     'auth_register_title' => 'Registrarse - Tienda Relojes',
@@ -55,6 +74,12 @@ return [
     'auth_remember_me' => 'Recordarme',
     'auth_btn_login' => 'Entrar',
     'auth_no_account' => 'Crear cuenta',
+    'auth_no_account_question' => '¿Aún no tienes cuenta?',
+    'auth_welcome_back' => 'Bienvenido de nuevo',
+    'auth_welcome_back_text' => 'Nos alegra verte otra vez por aquí.',
+    'auth_join_collection' => 'Únete a la colección',
+    'auth_join_collection_text' => 'Crea tu cuenta y guarda tus relojes favoritos.',
+    'auth_has_account_question' => '¿Ya tienes cuenta?',
     'auth_failed' => 'Correo o contraseña incorrectos.',
     'auth_logged_in' => 'Sesión iniciada.',
     'auth_logged_out' => 'Sesión cerrada.',
@@ -63,6 +88,7 @@ return [
     'cart_title' => 'Carrito - Tienda Relojes',
     'cart_subtitle' => 'Tu carrito',
     'cart_empty' => 'Tu carrito está vacío.',
+    'cart_empty_help' => 'Explora el catálogo y encuentra algo que te guste.',
     'cart_go_catalog' => 'Ir al catálogo',
     'cart_col_watch' => 'Reloj',
     'cart_col_price' => 'Precio',
@@ -85,11 +111,14 @@ return [
     'order_subtitle' => 'Pedido #:id',
     'order_success' => '¡Compra realizada con éxito!',
     'order_continue_shopping' => 'Seguir comprando',
+    'order_thanks' => '¡Gracias por tu compra!',
+    'order_summary' => 'Este es el resumen de tu pedido #:id.',
 
     // Deseados
     'wishlist_title' => 'Lista de deseados - Tienda Relojes',
     'wishlist_subtitle' => 'Lista de deseados',
     'wishlist_empty' => 'Tu lista de deseados está vacía.',
+    'wishlist_empty_help' => 'Guarda aquí los relojes que te gustaría tener algún día.',
     'wishlist_added' => 'Añadido a tu lista de deseados.',
     'wishlist_removed' => 'Quitado de tu lista de deseados.',
 
@@ -127,6 +156,33 @@ return [
     'admin_users_cannot_delete_self' => 'No puedes eliminar tu propia cuenta de usuario actual.',
     'admin_users_empty' => 'No hay usuarios registrados.',
 
+    // Panel de Administración - Relojes y navegación
+    'admin_panel' => 'Panel de administración',
+    'admin_view_store' => 'Ver tienda',
+    'admin_logout' => 'Cerrar sesión (:name)',
+    'admin_users_nav' => 'Usuarios',
+    'admin_users_new' => 'Nuevo usuario',
+    'admin_watches_title' => 'Relojes - Panel de administración',
+    'admin_watches_create_title' => 'Nuevo reloj - Panel de administración',
+    'admin_watches_edit_title' => 'Editar reloj - Panel de administración',
+    'admin_watches_new' => 'Nuevo reloj',
+    'admin_watches_create' => 'Crear reloj',
+    'admin_watches_edit' => 'Editar reloj',
+    'admin_watches_save' => 'Guardar cambios',
+    'admin_watches_empty' => 'No hay relojes registrados.',
+    'admin_watches_actions' => 'Acciones',
+    'admin_watches_field_name' => 'Nombre',
+    'admin_watches_field_brand' => 'Marca',
+    'admin_watches_field_description' => 'Descripción',
+    'admin_watches_field_price' => 'Precio',
+    'admin_watches_field_stock' => 'Stock',
+    'admin_watches_field_image' => 'Imagen (opcional)',
+    'admin_watches_confirm_delete' => '¿Eliminar este reloj?',
+    'admin_watches_created' => 'Reloj ":name" creado correctamente.',
+    'admin_watches_updated' => 'Reloj ":name" actualizado correctamente.',
+    'admin_watches_deleted' => 'Reloj ":name" eliminado correctamente.',
+    'admin_watches_has_orders' => 'No se puede eliminar ":name" porque tiene pedidos asociados.',
+
     // Blockchain y Certificados de Autenticidad
     'cert_title' => 'Certificado de Autenticidad Blockchain - :hash',
     'cert_subtitle' => 'Verificación descentralizada en red P2P',
@@ -146,5 +202,8 @@ return [
     'cert_node_name' => 'Nodo',
     'cert_node_status' => 'Estado',
     'cert_node_verdict' => 'Veredicto',
+    'cert_view_blockchain' => 'Ver Certificado y Consenso P2P',
+    'cert_box_title' => 'Certificado Digital de Autenticidad',
+    'cert_box_desc' => 'Cada reloj comprado en nuestra tienda cuenta con un certificado inmutable sellado en la red Blockchain.',
 ];
 

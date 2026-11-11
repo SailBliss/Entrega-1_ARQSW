@@ -1,5 +1,7 @@
 <?php
 
+// Isabela Ruiz, Nicolas Ortiz
+
 use App\Http\Middleware\EnsureUserIsAdmin;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;

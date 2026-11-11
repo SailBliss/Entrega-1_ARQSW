@@ -1,5 +1,7 @@
 <?php
 
+// Isabela Ruiz, Nicolas Ortiz
+
 use Illuminate\Support\Str;
 use Pdo\Mysql;
 

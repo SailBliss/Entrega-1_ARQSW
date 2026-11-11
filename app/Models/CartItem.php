@@ -1,5 +1,7 @@
 <?php
 
+// Isabela Ruiz, Miguel Angel Rendon
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;

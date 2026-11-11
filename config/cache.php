@@ -1,5 +1,7 @@
 <?php
 
+// Isabela Ruiz
+
 use Illuminate\Support\Str;
 
 return [

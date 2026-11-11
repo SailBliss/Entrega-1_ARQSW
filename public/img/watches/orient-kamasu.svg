@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+
+  <rect x="89.0" y="14" width="22" height="26" rx="4" fill="#b9c1cb"/>
+  <rect x="89.0" y="160" width="22" height="26" rx="4" fill="#b9c1cb"/>
+  <rect x="80" y="4" width="40" height="6" rx="2" fill="#b9c1cb" stroke="rgba(0,0,0,.15)"/>
+  <rect x="80" y="13" width="40" height="6" rx="2" fill="#b9c1cb" stroke="rgba(0,0,0,.15)"/>
+  <rect x="80" y="22" width="40" height="6" rx="2" fill="#b9c1cb" stroke="rgba(0,0,0,.15)"/>
+  <rect x="80" y="31" width="40" height="6" rx="2" fill="#b9c1cb" stroke="rgba(0,0,0,.15)"/>
+  <rect x="80" y="160" width="40" height="6" rx="2" fill="#b9c1cb" stroke="rgba(0,0,0,.15)"/>
+  <rect x="80" y="169" width="40" height="6" rx="2" fill="#b9c1cb" stroke="rgba(0,0,0,.15)"/>
+  <rect x="80" y="178" width="40" height="6" rx="2" fill="#b9c1cb" stroke="rgba(0,0,0,.15)"/>
+  <rect x="80" y="187" width="40" height="6" rx="2" fill="#b9c1cb" stroke="rgba(0,0,0,.15)"/><circle cx="100" cy="100" r="46" fill="#ced5dc" stroke="rgba(0,0,0,.15)" stroke-width="2"/><circle cx="100" cy="100" r="44" fill="none" stroke="#1e5fae" stroke-width="8"/><circle cx="100" cy="100" r="34" fill="#1c4f8f"/>
+  <line x1="100.0" y1="68.0" x2="100.0" y2="73.0" stroke="#dbe6f5" stroke-width="2.5"/>
+  <line x1="116.0" y1="72.3" x2="113.5" y2="76.6" stroke="#dbe6f5" stroke-width="1.2"/>
+  <line x1="127.7" y1="84.0" x2="123.4" y2="86.5" stroke="#dbe6f5" stroke-width="1.2"/>
+  <line x1="132.0" y1="100.0" x2="127.0" y2="100.0" stroke="#dbe6f5" stroke-width="2.5"/>
+  <line x1="127.7" y1="116.0" x2="123.4" y2="113.5" stroke="#dbe6f5" stroke-width="1.2"/>
+  <line x1="116.0" y1="127.7" x2="113.5" y2="123.4" stroke="#dbe6f5" stroke-width="1.2"/>
+  <line x1="100.0" y1="132.0" x2="100.0" y2="127.0" stroke="#dbe6f5" stroke-width="2.5"/>
+  <line x1="84.0" y1="127.7" x2="86.5" y2="123.4" stroke="#dbe6f5" stroke-width="1.2"/>
+  <line x1="72.3" y1="116.0" x2="76.6" y2="113.5" stroke="#dbe6f5" stroke-width="1.2"/>
+  <line x1="68.0" y1="100.0" x2="73.0" y2="100.0" stroke="#dbe6f5" stroke-width="2.5"/>
+  <line x1="72.3" y1="84.0" x2="76.6" y2="86.5" stroke="#dbe6f5" stroke-width="1.2"/>
+  <line x1="84.0" y1="72.3" x2="86.5" y2="76.6" stroke="#dbe6f5" stroke-width="1.2"/>
+  <line x1="100" y1="100" x2="102.8" y2="84.2" stroke="#dbe6f5" stroke-width="4" stroke-linecap="round"/>
+  <line x1="100" y1="100" x2="118.4" y2="115.4" stroke="#dbe6f5" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="100" cy="100" r="3.5" fill="#dbe6f5"/>
+</svg>

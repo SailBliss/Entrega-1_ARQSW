@@ -1,5 +1,7 @@
 <?php
 
+// Isabela Ruiz, Nicolas Ortiz, Miguel Angel Rendon
+
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AdminWatchController;
 use App\Http\Controllers\AuthController;

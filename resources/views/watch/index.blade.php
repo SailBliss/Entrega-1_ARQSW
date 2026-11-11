@@ -1,15 +1,28 @@
+{{-- Isabela Ruiz, Nicolas Ortiz, Miguel Angel Rendon --}}
 @extends('layouts.app')
 @section('title', $title)
-@section('subtitle', $subtitle)
 @section('content')
-@if($watches->isEmpty())
-  <p class="text-center lead">{{ __('messages.watches_not_found') }}</p>
-  <div class="text-center"><a href="{{ route('watch.index') }}" class="btn bg-primary text-white">{{ __('messages.see_all') }}</a></div>
-@else
-  <div class="row">
-    @foreach($watches as $watch)
-      @include('partials.watch-card')
-    @endforeach
+<div class="container my-4">
+  <div class="section-heading">
+    <div>
+      <h3 class="mb-1">{{ $subtitle }}</h3>
+      <p>{{ __('messages.watches_explore') }}</p>
+    </div>
   </div>
-@endif
+
+  @if($watches->isEmpty())
+    <div class="empty-state">
+      <i class="bi bi-search"></i>
+      <h5>{{ __('messages.watches_not_found') }}</h5>
+      <p>{{ __('messages.watches_not_found_help') }}</p>
+      <a href="{{ route('watch.index') }}" class="btn btn-brand">{{ __('messages.see_all') }}</a>
+    </div>
+  @else
+    <div class="row">
+      @foreach($watches as $watch)
+        @include('partials.watch-card')
+      @endforeach
+    </div>
+  @endif
+</div>
 @endsection
