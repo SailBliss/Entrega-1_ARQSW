@@ -119,9 +119,9 @@ class PlantGiftIntegrationTest extends TestCase
         $response = $this->actingAs($user)->get(route('cart.index'));
 
         $response->assertStatus(200);
-        $response->assertSee('¡Calificas para una Planta de Regalo!');
-        $response->assertSee('Regalo Promocional');
-        $response->assertSee('GRATIS');
+        $response->assertSee('¡Calificas para una planta de regalo!');
+        $response->assertSee('Regalo promocional');
+        $response->assertSee('Gratis');
     }
 
     public function test_checkout_with_two_watches_persists_gift_plant_in_order(): void

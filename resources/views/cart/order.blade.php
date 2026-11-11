@@ -70,7 +70,7 @@
         </div>
         <div class="col-md-7">
           <div class="d-flex align-items-center gap-2 mb-1">
-            <span class="badge bg-success"><i class="bi bi-gift-fill me-1"></i> Obsequio por compra 2+</span>
+            <span class="badge bg-success"><i class="bi bi-gift-fill me-1"></i> {{ __('messages.cart_plant_gift_title') }}</span>
             @if($order->gift_plant_category)
               <span class="badge bg-light text-dark border">{{ $order->gift_plant_category }}</span>
             @endif
@@ -79,10 +79,10 @@
           <p class="text-muted small mb-0">{{ __('messages.order_gift_plant_desc') }}</p>
         </div>
         <div class="col-md-3 text-md-end mt-3 mt-md-0">
-          <div class="fw-bold text-success fs-5">$0 (GRATIS)</div>
+          <div class="fw-bold text-success fs-5">{{ $prices->format(0) }} ({{ __('messages.cart_plant_gift_free') }})</div>
           @if($order->gift_plant_detail_url)
             <a href="{{ $order->gift_plant_detail_url }}" target="_blank" class="btn btn-outline-success btn-sm mt-1">
-              <i class="bi bi-box-arrow-up-right me-1"></i> Ver en tienda aliada
+              <i class="bi bi-box-arrow-up-right me-1"></i> {{ __('messages.cart_plant_shop') }}
             </a>
           @endif
         </div>
