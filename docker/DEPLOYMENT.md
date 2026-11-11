@@ -1,5 +1,7 @@
 # Despliegue del Entregable 2 con Docker
 
+Usa esta configuración con datos sintéticos y acceso restringido mientras se corrigen dos hallazgos del nodo: las respuestas JSON incluyen datos del comprador y la cadena se pierde cuando reinician todos los nodos. Confirma con el equipo consumidor qué campos y endpoints necesita antes de habilitar el acceso externo.
+
 En una VM existente de Compute Engine con Docker Engine y Docker Compose v2, obtén el commit a desplegar. Ejecuta los comandos desde la raíz del repositorio.
 
 1. Define `APP_URL` con la URL pública de la VM, `APP_PORT` con el puerto web (8080 por defecto), `APP_KEY` con una clave Laravel única y persistente, y `DB_PASSWORD` con una contraseña privada. Conserva estos valores en un archivo local fuera del repositorio, con permisos restringidos. Para generar la clave antes de iniciar la aplicación, ejecuta `docker run --rm php:8.4-cli php -r 'echo "base64:".base64_encode(random_bytes(32)).PHP_EOL;'`. Para una instalación nueva puedes omitir `DB_DATABASE` y `DB_USERNAME`, que toman los valores `tienda_relojes` y `tienda`.
