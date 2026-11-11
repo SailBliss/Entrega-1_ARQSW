@@ -1,0 +1,48 @@
+services:
+  app:
+    build: .
+    environment:
+      APP_ENV: production
+      APP_DEBUG: "false"
+      APP_KEY: ${APP_KEY:?Define APP_KEY}
+      APP_URL: ${APP_URL:?Define APP_URL}
+      LOG_CHANNEL: stderr
+      DB_CONNECTION: mysql
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_DATABASE: ${DB_DATABASE:-tienda_relojes}
+      DB_USERNAME: ${DB_USERNAME:-tienda}
+      DB_PASSWORD: ${DB_PASSWORD:?Define DB_PASSWORD}
+      BLOCKCHAIN_PRIMARY_NODE: http://node_store:5001
+      BLOCKCHAIN_NODE_STORE: http://node_store:5001
+      BLOCKCHAIN_NODE_AUDITOR: http://node_auditor:5002
+      BLOCKCHAIN_NODE_NOTARY: http://node_notary:5003
+      PLANTS_API_URL: ${PLANTS_API_URL:-http://34.136.112.77/api/plantas-disponibles}
+    ports:
+      - "${APP_PORT:-8080}:80"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - default
+      - blockchain_net
+    restart: unless-stopped
+
+  db:
+    image: mysql:8.4
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE:-tienda_relojes}
+      MYSQL_USER: ${DB_USERNAME:-tienda}
+      MYSQL_PASSWORD: ${DB_PASSWORD:?Define DB_PASSWORD}
+      MYSQL_RANDOM_ROOT_PASSWORD: "yes"
+    healthcheck:
+      test: ["CMD-SHELL", "mysql --user=\"$$MYSQL_USER\" --password=\"$$MYSQL_PASSWORD\" --database=\"$$MYSQL_DATABASE\" --execute='SELECT 1'"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - mysql_data:/var/lib/mysql
+    restart: unless-stopped
+
+volumes:
+  mysql_data:
