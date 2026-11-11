@@ -19,4 +19,5 @@ RUN COMPOSER_ALLOW_SUPERUSER=1 composer install --no-dev --prefer-dist --no-inte
 COPY . .
 COPY --from=frontend /app/public/build ./public/build
 RUN COMPOSER_ALLOW_SUPERUSER=1 composer dump-autoload --no-dev --optimize \
+    && mkdir -p storage/framework/cache/data storage/framework/sessions storage/framework/views storage/logs bootstrap/cache \
     && chown -R www-data:www-data storage bootstrap/cache
