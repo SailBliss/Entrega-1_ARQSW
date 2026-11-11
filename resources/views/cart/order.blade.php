@@ -2,6 +2,7 @@
 @extends('layouts.app')
 @section('title', $title)
 @section('content')
+@inject('prices', 'App\Services\PriceFormatter')
 <div class="container my-4">
   <div class="empty-state mb-4" style="padding-top: 1rem;">
     <i class="bi bi-bag-check" style="color: var(--accent);"></i>
@@ -30,21 +31,21 @@
                 @if($item->certificate)
                   <div class="mt-1">
                     <span class="badge bg-success-subtle text-success border border-success-subtle">
-                      <i class="bi bi-shield-check"></i> Certificado #{{ substr($item->certificate->certificate_hash, 0, 8) }}...
+                      <i class="bi bi-shield-check"></i> {{ __('messages.cert_number', ['hash' => substr($item->certificate->certificate_hash, 0, 8)]) }}...
                     </span>
                   </div>
                 @endif
               </td>
-              <td>${{ number_format($item->price, 0, ',', '.') }}</td>
+              <td>{{ $prices->format($item->price) }}</td>
               <td>{{ $item->quantity }}</td>
-              <td>${{ number_format($item->price * $item->quantity, 0, ',', '.') }}</td>
+              <td>{{ $prices->format($item->price, $item->quantity) }}</td>
             </tr>
           @endforeach
         </tbody>
         <tfoot>
           <tr>
             <th colspan="3" class="text-end">{{ __('messages.cart_col_total') }}</th>
-            <th>${{ number_format($order->total, 0, ',', '.') }}</th>
+            <th>{{ $prices->format($order->total) }}</th>
           </tr>
         </tfoot>
       </table>
@@ -69,7 +70,7 @@
         </div>
         <div class="col-md-7">
           <div class="d-flex align-items-center gap-2 mb-1">
-            <span class="badge bg-success"><i class="bi bi-gift-fill me-1"></i> Obsequio por compra 2+</span>
+            <span class="badge bg-success"><i class="bi bi-gift-fill me-1"></i> {{ __('messages.cart_plant_gift_title') }}</span>
             @if($order->gift_plant_category)
               <span class="badge bg-light text-dark border">{{ $order->gift_plant_category }}</span>
             @endif
@@ -78,10 +79,10 @@
           <p class="text-muted small mb-0">{{ __('messages.order_gift_plant_desc') }}</p>
         </div>
         <div class="col-md-3 text-md-end mt-3 mt-md-0">
-          <div class="fw-bold text-success fs-5">$0 (GRATIS)</div>
+          <div class="fw-bold text-success fs-5">{{ $prices->format(0) }} ({{ __('messages.cart_plant_gift_free') }})</div>
           @if($order->gift_plant_detail_url)
             <a href="{{ $order->gift_plant_detail_url }}" target="_blank" class="btn btn-outline-success btn-sm mt-1">
-              <i class="bi bi-box-arrow-up-right me-1"></i> Ver en tienda aliada
+              <i class="bi bi-box-arrow-up-right me-1"></i> {{ __('messages.cart_plant_shop') }}
             </a>
           @endif
         </div>
@@ -113,10 +114,10 @@
                     <div class="d-flex align-items-center gap-2 mb-2">
                       <span class="badge {{ $cert->status === 'mined' ? 'bg-success' : 'bg-warning text-dark' }}">
                         <i class="bi {{ $cert->status === 'mined' ? 'bi-check-circle' : 'bi-hourglass-split' }}"></i>
-                        {{ $cert->status === 'mined' ? 'Minado en Blockchain' : 'Pendiente de Minado' }}
+                        {{ $cert->status === 'mined' ? __('messages.cert_mined') : __('messages.cert_pending') }}
                       </span>
                       @if($cert->block_index)
-                        <span class="badge bg-dark">Bloque #{{ $cert->block_index }}</span>
+                        <span class="badge bg-dark">{{ __('messages.cert_block_index') }}{{ $cert->block_index }}</span>
                       @endif
                     </div>
                     <h5 class="fw-bold mb-1">{{ $item->watch->brand }} — {{ $item->watch->name }}</h5>
@@ -125,7 +126,7 @@
                       <span class="font-monospace text-primary fw-bold">{{ $cert->serial_number }}</span>
                     </p>
                     <p class="mb-0 text-muted small text-truncate">
-                      <strong>Hash SHA-256:</strong>
+                      <strong>{{ __('messages.cert_short_hash') }}:</strong>
                       <span class="font-monospace">{{ $cert->certificate_hash }}</span>
                     </p>
                   </div>

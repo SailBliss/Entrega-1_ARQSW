@@ -8,4 +8,5 @@ return [
         'notary' => env('BLOCKCHAIN_NODE_NOTARY', 'http://127.0.0.1:5003'),
     ],
     'timeout' => env('BLOCKCHAIN_TIMEOUT', 15),
+    'issuer_token' => env('BLOCKCHAIN_ISSUER_TOKEN', ''),
 ];

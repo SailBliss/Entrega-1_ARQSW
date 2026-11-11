@@ -26,7 +26,7 @@ class BlockchainCertificateTest extends TestCase
             'stock' => 5,
         ]);
 
-        $service = new BlockchainService();
+        $service = new BlockchainService;
         $serial = $service->generateSerialNumber($watch, 10, 20);
 
         $this->assertStringStartsWith('SN-W', $serial);
@@ -66,13 +66,23 @@ class BlockchainCertificateTest extends TestCase
             ], 200),
         ]);
 
-        $service = new BlockchainService();
+        $service = new BlockchainService;
         $cert = $service->issueAndMine($order, $orderItem);
 
         $this->assertInstanceOf(WatchCertificate::class, $cert);
         $this->assertEquals('mined', $cert->status);
         $this->assertEquals(3, $cert->block_index);
         $this->assertEquals('000abc123456789', $cert->block_hash);
+        Http::assertSent(fn ($request) => $request->url() === 'http://127.0.0.1:5001/transactions/new'
+            && $request->data() === [
+                'serial_number' => $cert->serial_number,
+                'certificate_hash' => $cert->certificate_hash,
+                'watch_name' => $watch->name,
+                'watch_brand' => $watch->brand,
+                'issued_at' => $cert->payload['issued_at'],
+            ]);
+        Http::assertSent(fn ($request) => $request->url() === 'http://127.0.0.1:5001/mine'
+            && $request['certificate_hash'] === $cert->certificate_hash);
         $this->assertDatabaseHas('watch_certificates', [
             'id' => $cert->id,
             'status' => 'mined',
@@ -103,7 +113,7 @@ class BlockchainCertificateTest extends TestCase
             'http://127.0.0.1:5001/*' => Http::response(['error' => 'server error'], 500),
         ]);
 
-        $service = new BlockchainService();
+        $service = new BlockchainService;
         $cert = $service->issueAndMine($order, $orderItem);
 
         $this->assertEquals('pending', $cert->status);
@@ -136,7 +146,7 @@ class BlockchainCertificateTest extends TestCase
             ], 200),
         ]);
 
-        $service = new BlockchainService();
+        $service = new BlockchainService;
         $result = $service->verifyConsensusAcrossNodes($hash);
 
         $this->assertTrue($result['consensus']);
@@ -201,7 +211,7 @@ class BlockchainCertificateTest extends TestCase
             'order_item_id' => $item->id,
             'watch_id' => $watch->id,
             'user_id' => $user->id,
-            'serial_number' => 'SN-TEST-1234',
+            'serial_number' => 'SN-W1-O123-I456-TEST',
             'certificate_hash' => 'abcdef0123456789abcdef0123456789',
             'block_index' => 4,
             'block_hash' => '000fakeblockhash',
@@ -221,6 +231,14 @@ class BlockchainCertificateTest extends TestCase
         $response->assertStatus(200);
         $response->assertSee('Certificado Válido y Auténtico');
         $response->assertSee('Audemars Piguet');
-        $response->assertSee('SN-TEST-1234');
+        $response->assertSee('SN-W1-O0-I0-TEST');
+        $response->assertDontSee('SN-W1-O123-I456-TEST');
+        $response->assertDontSee($user->name);
+        $response->assertDontSee($user->email);
+
+        $this->actingAs($user)->get(route('certificates.show', $cert->certificate_hash))
+            ->assertOk()
+            ->assertSee('SN-W1-O123-I456-TEST')
+            ->assertSee($user->name);
     }
 }

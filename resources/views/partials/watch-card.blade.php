@@ -7,7 +7,8 @@
     <div class="card-body">
       <span class="brand-pill">{{ $watch->brand }}</span>
       <h5 class="card-title mt-2 mb-1"><a href="{{ route('watch.show', $watch) }}" class="text-decoration-none text-reset">{{ $watch->name }}</a></h5>
-      <p class="watch-price mb-2">${{ number_format($watch->price, 0, ',', '.') }}</p>
+      @inject('prices', 'App\Services\PriceFormatter')
+      <p class="watch-price mb-2">{{ $prices->format($watch->price) }}</p>
       <p class="mb-3">
         @if($watch->stock > 0)
           <span class="stock-badge" style="color: var(--accent)"><span class="stock-dot in"></span>{{ __('messages.in_stock') }}</span>

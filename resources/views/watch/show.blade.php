@@ -17,7 +17,8 @@
       <span class="brand-pill">{{ $watch->brand }}</span>
       <h1 class="hero-title mt-2" style="font-size: 2rem;">{{ $watch->name }}</h1>
       <p class="hero-lead">{{ $watch->description }}</p>
-      <p class="watch-price">${{ number_format($watch->price, 0, ',', '.') }}</p>
+      @inject('prices', 'App\Services\PriceFormatter')
+      <p class="watch-price">{{ $prices->format($watch->price) }}</p>
       <p class="mb-4">
         @if($watch->stock > 0)
           <span class="stock-badge" style="color: var(--accent)"><span class="stock-dot in"></span>{{ __('messages.available', ['count' => $watch->stock]) }}</span>

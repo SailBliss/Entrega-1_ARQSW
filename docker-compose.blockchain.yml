@@ -7,6 +7,11 @@ services:
     environment:
       - PORT=5001
       - PEERS=node_auditor:5002,node_notary:5003
+      - BLOCKCHAIN_STATE_PATH=/data/state.json
+      - BLOCKCHAIN_PEER_TOKEN=${BLOCKCHAIN_PEER_TOKEN:?Define BLOCKCHAIN_PEER_TOKEN}
+      - BLOCKCHAIN_ISSUER_TOKEN=${BLOCKCHAIN_ISSUER_TOKEN:?Define BLOCKCHAIN_ISSUER_TOKEN}
+    volumes:
+      - blockchain_store:/data
     ports:
       - "5001:5001"
     networks:
@@ -21,6 +26,11 @@ services:
     environment:
       - PORT=5002
       - PEERS=node_store:5001,node_notary:5003
+      - BLOCKCHAIN_STATE_PATH=/data/state.json
+      - BLOCKCHAIN_PEER_TOKEN=${BLOCKCHAIN_PEER_TOKEN:?Define BLOCKCHAIN_PEER_TOKEN}
+      - BLOCKCHAIN_CAN_MINE=false
+    volumes:
+      - blockchain_auditor:/data
     ports:
       - "5002:5002"
     networks:
@@ -35,11 +45,21 @@ services:
     environment:
       - PORT=5003
       - PEERS=node_store:5001,node_auditor:5002
+      - BLOCKCHAIN_STATE_PATH=/data/state.json
+      - BLOCKCHAIN_PEER_TOKEN=${BLOCKCHAIN_PEER_TOKEN:?Define BLOCKCHAIN_PEER_TOKEN}
+      - BLOCKCHAIN_CAN_MINE=false
+    volumes:
+      - blockchain_notary:/data
     ports:
       - "5003:5003"
     networks:
       - blockchain_net
     restart: unless-stopped
+
+volumes:
+  blockchain_store:
+  blockchain_auditor:
+  blockchain_notary:
 
 networks:
   blockchain_net:

@@ -1,6 +1,6 @@
 {{-- Nicolas Ortiz, Miguel Angel Rendon --}}
 <!doctype html>
-<html lang="es">
+<html lang="{{ app()->getLocale() }}">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -12,7 +12,7 @@
     <div class="container">
       <a class="navbar-brand" href="{{ route('admin.dashboard') }}">{{ __('messages.admin_panel') }}</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#adminNav"
-        aria-controls="adminNav" aria-expanded="false" aria-label="Toggle navigation">
+        aria-controls="adminNav" aria-expanded="false" aria-label="{{ __('messages.toggle_navigation') }}">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="adminNav">
@@ -23,6 +23,7 @@
           <a class="nav-link" href="{{ route('admin.users.create') }}">{{ __('messages.admin_users_new') }}</a>
           <a class="nav-link" href="{{ route('home.index') }}">{{ __('messages.admin_view_store') }}</a>
         </div>
+        @include('partials.preferences', ['showCurrency' => false])
         <form method="POST" action="{{ route('logout') }}" class="d-flex">
           @csrf
           <button type="submit" class="btn btn-outline-light btn-sm">{{ __('messages.admin_logout', ['name' => auth()->user()->name]) }}</button>

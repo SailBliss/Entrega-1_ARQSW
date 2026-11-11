@@ -13,7 +13,7 @@
 </div>
 <div class="row">
   <div class="col-md-6 mb-3">
-    <label for="price" class="form-label">{{ __('messages.admin_watches_field_price') }}</label>
+    <label for="price" class="form-label">{{ __('messages.admin_watches_field_price') }} (COP)</label>
     <input type="number" class="form-control" id="price" name="price" min="1" value="{{ old('price', $watch->price) }}" required />
   </div>
   <div class="col-md-6 mb-3">

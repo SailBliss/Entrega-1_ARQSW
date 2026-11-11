@@ -2,6 +2,7 @@
 @extends('layouts.app')
 @section('title', $title)
 @section('content')
+@inject('prices', 'App\Services\PriceFormatter')
 <div class="container my-4">
   <h3 class="mb-4"><i class="bi bi-bag me-2"></i>{{ $subtitle }}</h3>
 
@@ -29,8 +30,8 @@
       <div class="alert alert-success d-flex align-items-center mb-3 p-3 shadow-sm border-0 border-start border-4 border-success">
         <i class="bi bi-patch-check-fill fs-3 text-success me-3"></i>
         <div>
-          <div class="fw-bold text-success">🌿 ¡Calificas para una Planta de Regalo!</div>
-          <div class="small text-muted">Por comprar 2 o más relojes, hemos añadido <strong>{{ $giftPlant['nombre'] }}</strong> totalmente gratis a tu carrito.</div>
+          <div class="fw-bold text-success">🌿 {{ __('messages.cart_plant_eligible') }}</div>
+          <div class="small text-muted">{{ __('messages.cart_plant_added', ['plant' => $giftPlant['nombre']]) }}</div>
         </div>
       </div>
     @endif
@@ -54,9 +55,9 @@
                   <a href="{{ route('watch.show', $item->watch) }}" class="text-reset fw-semibold">{{ $item->watch->name }}</a>
                   <div class="text-muted small">{{ $item->watch->brand }}</div>
                 </td>
-                <td>${{ number_format($item->watch->price, 0, ',', '.') }}</td>
+                <td>{{ $prices->format($item->watch->price) }}</td>
                 <td>{{ $item->quantity }}</td>
-                <td>${{ number_format($item->subtotal(), 0, ',', '.') }}</td>
+                <td>{{ $prices->format($item->subtotal()) }}</td>
                 <td>
                   <form method="POST" action="{{ route('cart.remove', $item->watch) }}">
                     @csrf @method('DELETE')
@@ -77,25 +78,25 @@
                       <div class="p-2 bg-success-subtle rounded"><i class="bi bi-flower1 fs-4 text-success"></i></div>
                     @endif
                     <div>
-                      <span class="badge bg-success mb-1"><i class="bi bi-gift-fill me-1"></i> Regalo Promocional</span>
+                      <span class="badge bg-success mb-1"><i class="bi bi-gift-fill me-1"></i> {{ __('messages.cart_plant_badge') }}</span>
                       <div class="fw-bold text-success">{{ $giftPlant['nombre'] }}</div>
-                      <small class="text-muted">{{ $giftPlant['categoria'] ?? 'Planta' }} · {{ __('messages.cart_plant_partner_credit') }}</small>
+                      <small class="text-muted">{{ $giftPlant['categoria'] ?? __('messages.cart_plant_category') }} · {{ __('messages.cart_plant_partner_credit') }}</small>
                       @if(!empty($giftPlant['detalle_url']))
-                        <div><a href="{{ $giftPlant['detalle_url'] }}" target="_blank" class="small text-decoration-none text-success"><i class="bi bi-box-arrow-up-right me-1"></i>Ver en tienda de plantas</a></div>
+                        <div><a href="{{ $giftPlant['detalle_url'] }}" target="_blank" class="small text-decoration-none text-success"><i class="bi bi-box-arrow-up-right me-1"></i> {{ __('messages.cart_plant_shop') }}</a></div>
                       @endif
                     </div>
                   </div>
                 </td>
                 <td>
-                  @if(!empty($giftPlant['precio']))
-                    <div class="text-decoration-line-through text-muted small">${{ number_format($giftPlant['precio'], 0, ',', '.') }}</div>
+                  @if(!empty($giftPlant['precio']) && is_numeric($giftPlant['precio']))
+                    <div class="text-decoration-line-through text-muted small">{{ $prices->format((string) $giftPlant['precio']) }}</div>
                   @endif
                   <span class="fw-bold text-success">{{ __('messages.cart_plant_gift_free') }}</span>
                 </td>
                 <td>1</td>
-                <td class="fw-bold text-success">$0</td>
+                <td class="fw-bold text-success">{{ $prices->format(0) }}</td>
                 <td>
-                  <span class="badge bg-success-subtle text-success border border-success-subtle">GRATIS</span>
+                  <span class="badge bg-success-subtle text-success border border-success-subtle">{{ __('messages.cart_plant_gift_free') }}</span>
                 </td>
               </tr>
             @endif
@@ -103,7 +104,7 @@
           <tfoot>
             <tr>
               <th colspan="3" class="text-end">{{ __('messages.cart_col_total') }}</th>
-              <th id="cart-total">${{ number_format($total, 0, ',', '.') }}</th>
+              <th id="cart-total">{{ $prices->format($total) }}</th>
               <th></th>
             </tr>
           </tfoot>

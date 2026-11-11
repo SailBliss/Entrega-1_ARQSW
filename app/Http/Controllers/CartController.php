@@ -7,12 +7,12 @@ namespace App\Http\Controllers;
 use App\Models\CartItem;
 use App\Models\Order;
 use App\Models\Watch;
+use App\Services\BlockchainService;
+use App\Services\PlantService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
-
-use App\Services\PlantService;
 
 class CartController extends Controller
 {
@@ -145,7 +145,7 @@ class CartController extends Controller
         }
 
         // Issue blockchain authenticity certificates for purchased items
-        $blockchainService = app(\App\Services\BlockchainService::class);
+        $blockchainService = app(BlockchainService::class);
         foreach ($result->items()->with('watch')->get() as $orderItem) {
             $blockchainService->issueAndMine($result, $orderItem);
         }

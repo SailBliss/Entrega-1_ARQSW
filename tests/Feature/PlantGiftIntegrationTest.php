@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\CartItem;
+use App\Models\Order;
 use App\Models\User;
 use App\Models\Watch;
 use App\Services\PlantService;
@@ -59,7 +60,7 @@ class PlantGiftIntegrationTest extends TestCase
             'http://34.136.112.77/api/plantas-disponibles' => Http::response($this->mockPlantsResponse, 200),
         ]);
 
-        $service = new PlantService();
+        $service = new PlantService;
         $plants = $service->getAvailablePlants();
 
         $this->assertCount(2, $plants); // id 1 and id 3 (id 2 had stock 0)
@@ -119,9 +120,9 @@ class PlantGiftIntegrationTest extends TestCase
         $response = $this->actingAs($user)->get(route('cart.index'));
 
         $response->assertStatus(200);
-        $response->assertSee('¡Calificas para una Planta de Regalo!');
-        $response->assertSee('Regalo Promocional');
-        $response->assertSee('GRATIS');
+        $response->assertSee('¡Calificas para una planta de regalo!');
+        $response->assertSee('Regalo promocional');
+        $response->assertSee('Gratis');
     }
 
     public function test_checkout_with_two_watches_persists_gift_plant_in_order(): void
@@ -155,7 +156,7 @@ class PlantGiftIntegrationTest extends TestCase
             'total' => 1400,
         ]);
 
-        $order = \App\Models\Order::where('user_id', $user->id)->first();
+        $order = Order::where('user_id', $user->id)->first();
         $this->assertNotNull($order->gift_plant_name);
         $this->assertTrue($order->hasGiftPlant());
 

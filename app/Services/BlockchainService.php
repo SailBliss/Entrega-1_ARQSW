@@ -14,7 +14,9 @@ use Illuminate\Support\Str;
 class BlockchainService
 {
     protected string $primaryNode;
+
     protected array $nodes;
+
     protected int $timeout;
 
     public function __construct()
@@ -61,7 +63,7 @@ class BlockchainService
         $order->loadMissing('user');
 
         $watch = $item->watch;
-        $serialNumber = $this->generateSerialNumber($watch, $order->id, $item->id);
+        $serialNumber = $this->generateSerialNumber($watch);
 
         $payload = [
             'serial_number' => $serialNumber,
@@ -92,21 +94,23 @@ class BlockchainService
 
         try {
             // 1. Submit transaction to primary node
-            $txResponse = Http::timeout($this->timeout)->post("{$this->primaryNode}/transactions/new", array_merge($payload, [
-                'order_id' => $order->id,
-                'watch_id' => $watch->id,
+            $issuer = Http::timeout($this->timeout)->withToken((string) config('blockchain.issuer_token'));
+            $txResponse = $issuer->post("{$this->primaryNode}/transactions/new", [
                 'serial_number' => $serialNumber,
                 'certificate_hash' => $certificateHash,
-                'payload' => $payload,
-            ]));
+                'watch_name' => $payload['watch_name'],
+                'watch_brand' => $payload['watch_brand'],
+                'issued_at' => $payload['issued_at'],
+            ]);
 
             if (! $txResponse->successful()) {
                 Log::warning("Failed to submit blockchain transaction: {$txResponse->body()}");
+
                 return $certificate;
             }
 
             // 2. Trigger mining on primary node (which will broadcast to peers)
-            $mineResponse = Http::timeout($this->timeout)->post("{$this->primaryNode}/mine");
+            $mineResponse = $issuer->post("{$this->primaryNode}/mine", ['certificate_hash' => $certificateHash]);
 
             if ($mineResponse->successful()) {
                 $mineData = $mineResponse->json();
@@ -142,7 +146,7 @@ class BlockchainService
 
             if ($response->successful()) {
                 $data = $response->json();
-                $data['verified'] = !empty($data['valid']) || !empty($data['verified']);
+                $data['verified'] = ! empty($data['valid']) || ! empty($data['verified']);
 
                 return [
                     'online' => true,
@@ -183,7 +187,7 @@ class BlockchainService
             $nodeResult = $this->verifyOnNode($certificateHash, $url);
             $results[$name] = $nodeResult;
 
-            $isValid = !empty($nodeResult['data']['verified']) || !empty($nodeResult['data']['valid']);
+            $isValid = ! empty($nodeResult['data']['verified']) || ! empty($nodeResult['data']['valid']);
             if ($nodeResult['online'] && $isValid) {
                 $verifiedCount++;
                 $blockHash = $nodeResult['data']['block_hash'] ?? null;
