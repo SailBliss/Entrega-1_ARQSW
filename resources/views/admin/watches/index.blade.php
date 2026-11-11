@@ -3,6 +3,7 @@
 @section('title', $title)
 @section('heading', __('messages.nav_watches'))
 @section('content')
+@inject('prices', 'App\Services\PriceFormatter')
 <div class="mb-3">
   <a href="{{ route('admin.watches.create') }}" class="btn btn-primary">{{ __('messages.admin_watches_new') }}</a>
 </div>
@@ -21,7 +22,7 @@
             <td>{{ $watch->id }}</td>
             <td>{{ $watch->name }}</td>
             <td>{{ $watch->brand }}</td>
-            <td>${{ number_format($watch->price, 0, ',', '.') }}</td>
+            <td>{{ $prices->formatCop($watch->price) }}</td>
             <td>{{ $watch->stock }}</td>
             <td class="text-end">
               <a href="{{ route('admin.watches.edit', $watch) }}" class="btn btn-sm btn-outline-secondary">{{ __('messages.admin_users_btn_edit') }}</a>
