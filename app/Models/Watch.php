@@ -27,6 +27,11 @@ class Watch extends Model
         return $this->hasMany(OrderItem::class);
     }
 
+    public function certificates(): HasMany
+    {
+        return $this->hasMany(WatchCertificate::class);
+    }
+
     public function scopeSearch($query, ?string $term)
     {
         if ($term === null || trim($term) === '') {

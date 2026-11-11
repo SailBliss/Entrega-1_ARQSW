@@ -126,4 +126,25 @@ return [
     'admin_users_deleted' => 'Usuario eliminado exitosamente.',
     'admin_users_cannot_delete_self' => 'No puedes eliminar tu propia cuenta de usuario actual.',
     'admin_users_empty' => 'No hay usuarios registrados.',
+
+    // Blockchain y Certificados de Autenticidad
+    'cert_title' => 'Certificado de Autenticidad Blockchain - :hash',
+    'cert_subtitle' => 'Verificación descentralizada en red P2P',
+    'cert_status_verified' => 'Certificado Válido y Auténtico',
+    'cert_status_unverified' => 'Certificado No Válido o Pendiente de Minado',
+    'cert_consensus_achieved' => 'Consenso P2P Alcanzado: Validado unánimemente en todos los nodos de la red.',
+    'cert_consensus_failed' => 'Discrepancia o falta de consenso entre nodos de la red blockchain.',
+    'cert_serial_number' => 'Número de Serie',
+    'cert_watch_name' => 'Reloj',
+    'cert_watch_brand' => 'Marca',
+    'cert_buyer' => 'Comprador Registrado',
+    'cert_issue_date' => 'Fecha de Emisión',
+    'cert_block_index' => 'Bloque #',
+    'cert_block_hash' => 'Hash del Bloque',
+    'cert_hash' => 'Hash SHA-256 del Certificado',
+    'cert_network_nodes' => 'Nodos de la Red P2P Consultados',
+    'cert_node_name' => 'Nodo',
+    'cert_node_status' => 'Estado',
+    'cert_node_verdict' => 'Veredicto',
 ];
+

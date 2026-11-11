@@ -98,6 +98,12 @@ class CartController extends Controller
             return redirect()->route('cart.index')->withErrors(['cart' => $result]);
         }
 
+        // Issue blockchain authenticity certificates for purchased items
+        $blockchainService = app(\App\Services\BlockchainService::class);
+        foreach ($result->items()->with('watch')->get() as $orderItem) {
+            $blockchainService->issueAndMine($result, $orderItem);
+        }
+
         return redirect()->route('orders.show', $result)->with('success', __('messages.order_success'));
     }
 
@@ -108,7 +114,7 @@ class CartController extends Controller
         return view('cart.order', [
             'title' => __('messages.order_title', ['id' => $order->id]),
             'subtitle' => __('messages.order_subtitle', ['id' => $order->id]),
-            'order' => $order->load('items.watch'),
+            'order' => $order->load('items.watch', 'items.certificate'),
         ]);
     }
 

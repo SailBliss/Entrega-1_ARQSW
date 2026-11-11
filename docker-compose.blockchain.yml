@@ -1,0 +1,46 @@
+services:
+  node_store:
+    build:
+      context: ./blockchain_network
+      dockerfile: Dockerfile
+    container_name: blockchain_node_store
+    environment:
+      - PORT=5001
+      - PEERS=node_auditor:5002,node_notary:5003
+    ports:
+      - "5001:5001"
+    networks:
+      - blockchain_net
+    restart: unless-stopped
+
+  node_auditor:
+    build:
+      context: ./blockchain_network
+      dockerfile: Dockerfile
+    container_name: blockchain_node_auditor
+    environment:
+      - PORT=5002
+      - PEERS=node_store:5001,node_notary:5003
+    ports:
+      - "5002:5002"
+    networks:
+      - blockchain_net
+    restart: unless-stopped
+
+  node_notary:
+    build:
+      context: ./blockchain_network
+      dockerfile: Dockerfile
+    container_name: blockchain_node_notary
+    environment:
+      - PORT=5003
+      - PEERS=node_store:5001,node_auditor:5002
+    ports:
+      - "5003:5003"
+    networks:
+      - blockchain_net
+    restart: unless-stopped
+
+networks:
+  blockchain_net:
+    driver: bridge

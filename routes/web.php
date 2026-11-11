@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AdminWatchController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CertificateVerificationController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\WatchController;
 use App\Http\Controllers\WishlistController;
@@ -13,6 +14,8 @@ Route::get('/', [HomeController::class, 'index'])->name('home.index');
 
 Route::get('/watches', [WatchController::class, 'index'])->name('watch.index');
 Route::get('/watches/{watch}', [WatchController::class, 'show'])->name('watch.show');
+
+Route::get('/certificates/{hash}', [CertificateVerificationController::class, 'show'])->name('certificates.show');
 
 Route::middleware('guest')->group(function () {
     Route::get('/register', [AuthController::class, 'showRegister'])->name('register');

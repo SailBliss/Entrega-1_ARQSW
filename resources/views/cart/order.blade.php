@@ -8,7 +8,16 @@
     <tbody>
       @foreach($order->items as $item)
         <tr>
-          <td>{{ $item->watch->name }}</td>
+          <td>
+            <strong>{{ $item->watch->name }}</strong>
+            @if($item->certificate)
+              <div class="mt-1">
+                <a href="{{ route('certificates.show', $item->certificate->certificate_hash) }}" class="badge bg-success text-decoration-none">
+                  🛡️ Certificado Blockchain ({{ substr($item->certificate->certificate_hash, 0, 8) }}...)
+                </a>
+              </div>
+            @endif
+          </td>
           <td>${{ number_format($item->price, 0, ',', '.') }}</td>
           <td>{{ $item->quantity }}</td>
           <td>${{ number_format($item->price * $item->quantity, 0, ',', '.') }}</td>

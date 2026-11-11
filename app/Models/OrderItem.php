@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class OrderItem extends Model
 {
@@ -17,5 +18,10 @@ class OrderItem extends Model
     public function watch(): BelongsTo
     {
         return $this->belongsTo(Watch::class);
+    }
+
+    public function certificate(): HasOne
+    {
+        return $this->hasOne(WatchCertificate::class);
     }
 }
