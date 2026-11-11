@@ -5,6 +5,7 @@ import sys
 import time
 from urllib.parse import urlparse
 from flask import Flask, jsonify, request
+from flask_cors import CORS
 import requests
 
 class Blockchain:
@@ -148,6 +149,7 @@ class Blockchain:
 
 
 app = Flask(__name__)
+CORS(app, resources={r"/*": {"origins": "*"}})
 node_port = int(os.environ.get('PORT', sys.argv[1] if len(sys.argv) > 1 else 5001))
 blockchain = Blockchain(port=node_port, difficulty=3)
 
@@ -163,6 +165,7 @@ if peers_env:
 def status():
     return jsonify({
         'status': 'online',
+        'service': 'Universal Blockchain Certificate Authority',
         'node_port': blockchain.port,
         'chain_length': len(blockchain.chain),
         'difficulty': blockchain.difficulty,
@@ -173,13 +176,15 @@ def status():
 @app.route('/transactions/new', methods=['POST'])
 def new_transaction():
     values = request.get_json(silent=True) or {}
-    required = ['order_id', 'watch_id', 'serial_number', 'certificate_hash']
-    if not all(k in values for k in required):
-        return jsonify({'error': f'Faltan campos requeridos: {required}'}), 400
+    required = ['serial_number', 'certificate_hash']
+    if not all(k in values and values[k] for k in required):
+        return jsonify({
+            'error': f'Faltan campos obligatorios: {required}. Puedes adjuntar cualquier otro campo adicional en el JSON.'
+        }), 400
 
     index = blockchain.add_transaction(values)
     return jsonify({
-        'message': f'Transacción agregada para el Bloque #{index}',
+        'message': f'Transacción agregada exitosamente para el Bloque #{index}',
         'transaction': values
     }), 201
 
@@ -294,21 +299,25 @@ def verify_certificate(certificate_hash):
             'message': 'Certificado no encontrado en esta blockchain'
         }), 404
 
-    return jsonify({
+    response = {
         'valid': chain_valid,
         'certificate_hash': certificate_hash,
         'serial_number': found_tx.get('serial_number'),
-        'watch_name': found_tx.get('watch_name'),
-        'watch_brand': found_tx.get('watch_brand'),
-        'order_id': found_tx.get('order_id'),
-        'issued_at': found_tx.get('issued_at'),
         'block_index': found_block.get('index'),
         'block_hash': found_block.get('hash'),
         'previous_hash': found_block.get('previous_hash'),
         'nonce': found_block.get('nonce'),
         'chain_total_blocks': len(blockchain.chain),
-        'mined_by_port': blockchain.port
-    }), 200
+        'mined_by_port': blockchain.port,
+        'issued_at': found_tx.get('issued_at'),
+        'metadata': found_tx
+    }
+    # Backward compatibility with existing store fields
+    for legacy_key in ['watch_name', 'watch_brand', 'order_id']:
+        if legacy_key in found_tx:
+            response[legacy_key] = found_tx[legacy_key]
+
+    return jsonify(response), 200
 
 
 if __name__ == '__main__':
