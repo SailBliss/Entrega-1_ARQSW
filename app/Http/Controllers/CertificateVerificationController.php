@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\WatchCertificate;
 use App\Services\BlockchainService;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class CertificateVerificationController extends Controller

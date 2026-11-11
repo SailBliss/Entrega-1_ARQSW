@@ -26,7 +26,7 @@ class BlockchainCertificateTest extends TestCase
             'stock' => 5,
         ]);
 
-        $service = new BlockchainService();
+        $service = new BlockchainService;
         $serial = $service->generateSerialNumber($watch, 10, 20);
 
         $this->assertStringStartsWith('SN-W', $serial);
@@ -66,7 +66,7 @@ class BlockchainCertificateTest extends TestCase
             ], 200),
         ]);
 
-        $service = new BlockchainService();
+        $service = new BlockchainService;
         $cert = $service->issueAndMine($order, $orderItem);
 
         $this->assertInstanceOf(WatchCertificate::class, $cert);
@@ -103,7 +103,7 @@ class BlockchainCertificateTest extends TestCase
             'http://127.0.0.1:5001/*' => Http::response(['error' => 'server error'], 500),
         ]);
 
-        $service = new BlockchainService();
+        $service = new BlockchainService;
         $cert = $service->issueAndMine($order, $orderItem);
 
         $this->assertEquals('pending', $cert->status);
@@ -136,7 +136,7 @@ class BlockchainCertificateTest extends TestCase
             ], 200),
         ]);
 
-        $service = new BlockchainService();
+        $service = new BlockchainService;
         $result = $service->verifyConsensusAcrossNodes($hash);
 
         $this->assertTrue($result['consensus']);

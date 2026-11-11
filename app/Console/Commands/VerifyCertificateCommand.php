@@ -56,6 +56,7 @@ class VerifyCertificateCommand extends Command
                 ] : null,
             ]);
             $this->line(json_encode($output, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+
             return Command::SUCCESS;
         }
 
@@ -64,12 +65,12 @@ class VerifyCertificateCommand extends Command
 
         foreach ($consensusResult['nodes'] as $nodeName => $nodeInfo) {
             $online = $nodeInfo['online'] ? 'ONLINE' : 'OFFLINE';
-            $verified = !empty($nodeInfo['data']['verified']) ? 'VALID' : 'INVALID';
+            $verified = ! empty($nodeInfo['data']['verified']) ? 'VALID' : 'INVALID';
             $blockIndex = $nodeInfo['data']['block_index'] ?? 'N/A';
             $blockHash = isset($nodeInfo['data']['block_hash']) ? substr($nodeInfo['data']['block_hash'], 0, 16).'...' : 'N/A';
 
-            if (!empty($nodeInfo['data']['serial_number'])) {
-                $payloadData = !empty($nodeInfo['data']['payload']) ? $nodeInfo['data']['payload'] : $nodeInfo['data'];
+            if (! empty($nodeInfo['data']['serial_number'])) {
+                $payloadData = ! empty($nodeInfo['data']['payload']) ? $nodeInfo['data']['payload'] : $nodeInfo['data'];
             }
 
             $tableRows[] = [
@@ -87,11 +88,11 @@ class VerifyCertificateCommand extends Command
 
         if ($consensusResult['consensus']) {
             $this->info(">>> CONSENSUS CONFIRMED: {$consensusResult['verified_nodes_count']}/{$consensusResult['total_nodes']} NODES IN AGREEMENT <<<");
-            $this->line("<info>The certificate is authentic, immutable, and synchronized across the P2P network.</info>");
+            $this->line('<info>The certificate is authentic, immutable, and synchronized across the P2P network.</info>');
             $this->line("Block Hash: <comment>{$consensusResult['consistent_block_hash']}</comment>");
         } else {
             $this->error(">>> WARNING: CONSENSUS NOT REACHED ({$consensusResult['verified_nodes_count']}/{$consensusResult['total_nodes']} nodes verified) <<<");
-            $this->line("The transaction might still be unmined, or the hash was not found on some nodes.");
+            $this->line('The transaction might still be unmined, or the hash was not found on some nodes.');
         }
 
         if ($payloadData) {

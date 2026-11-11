@@ -143,6 +143,7 @@ class PurchaseTestCommand extends Command
 
         if ($jsonOnly) {
             $this->line(json_encode($resultStruct, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+
             return Command::SUCCESS;
         }
 

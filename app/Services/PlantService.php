@@ -11,7 +11,9 @@ use Illuminate\Support\Facades\Log;
 class PlantService
 {
     protected string $apiUrl;
+
     protected int $timeout;
+
     protected int $cacheTtl;
 
     public function __construct()
@@ -42,10 +44,12 @@ class PlantService
                 }
 
                 Log::warning("Plant API returned error status: {$response->status()}");
+
                 return [];
             });
         } catch (Exception $e) {
             Log::error("Failed to connect to external Plants API: {$e->getMessage()}");
+
             return [];
         }
     }

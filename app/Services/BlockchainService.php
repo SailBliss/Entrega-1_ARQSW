@@ -14,7 +14,9 @@ use Illuminate\Support\Str;
 class BlockchainService
 {
     protected string $primaryNode;
+
     protected array $nodes;
+
     protected int $timeout;
 
     public function __construct()
@@ -102,6 +104,7 @@ class BlockchainService
 
             if (! $txResponse->successful()) {
                 Log::warning("Failed to submit blockchain transaction: {$txResponse->body()}");
+
                 return $certificate;
             }
 
@@ -142,7 +145,7 @@ class BlockchainService
 
             if ($response->successful()) {
                 $data = $response->json();
-                $data['verified'] = !empty($data['valid']) || !empty($data['verified']);
+                $data['verified'] = ! empty($data['valid']) || ! empty($data['verified']);
 
                 return [
                     'online' => true,
@@ -183,7 +186,7 @@ class BlockchainService
             $nodeResult = $this->verifyOnNode($certificateHash, $url);
             $results[$name] = $nodeResult;
 
-            $isValid = !empty($nodeResult['data']['verified']) || !empty($nodeResult['data']['valid']);
+            $isValid = ! empty($nodeResult['data']['verified']) || ! empty($nodeResult['data']['valid']);
             if ($nodeResult['online'] && $isValid) {
                 $verifiedCount++;
                 $blockHash = $nodeResult['data']['block_hash'] ?? null;
