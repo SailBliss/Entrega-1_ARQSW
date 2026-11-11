@@ -51,6 +51,45 @@
     </div>
   </div>
 
+  {{-- Plant Gift Included in Order --}}
+  @if($order->hasGiftPlant())
+    <div class="mb-4">
+      <div class="d-flex align-items-center gap-2 mb-2">
+        <i class="bi bi-flower1 fs-3 text-success"></i>
+        <h5 class="mb-0 fw-bold text-success">{{ __('messages.order_gift_plant_heading') }}</h5>
+      </div>
+      <div class="card card-soft p-3 border-start border-4 border-success shadow-sm">
+        <div class="row align-items-center">
+        <div class="col-md-2 text-center mb-3 mb-md-0">
+          @if($order->gift_plant_image)
+            <img src="{{ $order->gift_plant_image }}" alt="{{ $order->gift_plant_name }}" class="img-fluid rounded border shadow-sm" style="max-height: 85px; object-fit: cover;">
+          @else
+            <div class="p-3 bg-success-subtle rounded"><i class="bi bi-flower1 fs-1 text-success"></i></div>
+          @endif
+        </div>
+        <div class="col-md-7">
+          <div class="d-flex align-items-center gap-2 mb-1">
+            <span class="badge bg-success"><i class="bi bi-gift-fill me-1"></i> Obsequio por compra 2+</span>
+            @if($order->gift_plant_category)
+              <span class="badge bg-light text-dark border">{{ $order->gift_plant_category }}</span>
+            @endif
+          </div>
+          <h5 class="fw-bold mb-1 text-success">🌿 {{ $order->gift_plant_name }}</h5>
+          <p class="text-muted small mb-0">{{ __('messages.order_gift_plant_desc') }}</p>
+        </div>
+        <div class="col-md-3 text-md-end mt-3 mt-md-0">
+          <div class="fw-bold text-success fs-5">$0 (GRATIS)</div>
+          @if($order->gift_plant_detail_url)
+            <a href="{{ $order->gift_plant_detail_url }}" target="_blank" class="btn btn-outline-success btn-sm mt-1">
+              <i class="bi bi-box-arrow-up-right me-1"></i> Ver en tienda aliada
+            </a>
+          @endif
+        </div>
+      </div>
+    </div>
+  </div>
+  @endif
+
   {{-- Digital Blockchain Certificates Section --}}
   @php($certificates = $order->items->pluck('certificate')->filter())
   @if($certificates->isNotEmpty())

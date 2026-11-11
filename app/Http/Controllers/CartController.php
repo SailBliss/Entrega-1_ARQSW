@@ -12,17 +12,35 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
+use App\Services\PlantService;
+
 class CartController extends Controller
 {
-    public function index(Request $request): View
+    public function index(Request $request, PlantService $plantService): View
     {
         $items = $request->user()->cartItems()->with('watch')->get();
+        $totalQuantity = $items->sum('quantity');
+
+        $giftPlant = null;
+        if ($totalQuantity >= config('plants.min_watches_for_gift', 2)) {
+            $giftPlant = $request->session()->get('gift_plant');
+            if (! $giftPlant) {
+                $giftPlant = $plantService->getRandomGiftPlant();
+                if ($giftPlant) {
+                    $request->session()->put('gift_plant', $giftPlant);
+                }
+            }
+        } else {
+            $request->session()->forget('gift_plant');
+        }
 
         return view('cart.index', [
             'title' => __('messages.cart_title'),
             'subtitle' => __('messages.cart_subtitle'),
             'items' => $items,
             'total' => $this->total($items),
+            'giftPlant' => $giftPlant,
+            'totalQuantity' => $totalQuantity,
         ]);
     }
 
@@ -57,15 +75,16 @@ class CartController extends Controller
     public function clear(Request $request): RedirectResponse
     {
         $request->user()->cartItems()->delete();
+        $request->session()->forget('gift_plant');
 
         return back()->with('success', __('messages.cart_cleared'));
     }
 
-    public function checkout(Request $request): RedirectResponse
+    public function checkout(Request $request, PlantService $plantService): RedirectResponse
     {
         $user = $request->user();
 
-        $result = DB::transaction(function () use ($user) {
+        $result = DB::transaction(function () use ($user, $request, $plantService) {
             $items = $user->cartItems()->with('watch')->get();
 
             if ($items->isEmpty()) {
@@ -80,7 +99,27 @@ class CartController extends Controller
                 }
             }
 
-            $order = Order::create(['user_id' => $user->id, 'total' => $this->total($items)]);
+            $totalQuantity = $items->sum('quantity');
+            $giftPlant = null;
+            if ($totalQuantity >= config('plants.min_watches_for_gift', 2)) {
+                $giftPlant = $request->session()->get('gift_plant') ?: $plantService->getRandomGiftPlant();
+            }
+
+            $orderData = [
+                'user_id' => $user->id,
+                'total' => $this->total($items),
+            ];
+
+            if ($giftPlant) {
+                $orderData['gift_plant_id'] = $giftPlant['id'] ?? null;
+                $orderData['gift_plant_name'] = $giftPlant['nombre'] ?? null;
+                $orderData['gift_plant_category'] = $giftPlant['categoria'] ?? null;
+                $orderData['gift_plant_image'] = $giftPlant['imagen_url'] ?? null;
+                $orderData['gift_plant_detail_url'] = $giftPlant['detalle_url'] ?? null;
+                $orderData['gift_plant_price'] = $giftPlant['precio'] ?? 0;
+            }
+
+            $order = Order::create($orderData);
 
             foreach ($items as $item) {
                 $order->items()->create([
@@ -91,7 +130,12 @@ class CartController extends Controller
                 $watches[$item->watch_id]->decrement('stock', $item->quantity);
             }
 
+            if ($giftPlant && ! empty($giftPlant['id'])) {
+                $plantService->notifyStockReduction((int) $giftPlant['id']);
+            }
+
             $user->cartItems()->delete();
+            $request->session()->forget('gift_plant');
 
             return $order;
         });

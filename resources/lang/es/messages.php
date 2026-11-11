@@ -201,9 +201,18 @@ return [
     'cert_network_nodes' => 'Nodos de la Red P2P Consultados',
     'cert_node_name' => 'Nodo',
     'cert_node_status' => 'Estado',
-    'cert_node_verdict' => 'Veredicto',
     'cert_view_blockchain' => 'Ver Certificado y Consenso P2P',
     'cert_box_title' => 'Certificado Digital de Autenticidad',
     'cert_box_desc' => 'Cada reloj comprado en nuestra tienda cuenta con un certificado inmutable sellado en la red Blockchain.',
+
+    // Alianza Externa: Tienda de Plantas
+    'cart_plant_promo_banner' => '¡Promoción Especial por Compra Múltiple!',
+    'cart_plant_promo_hint' => '¡Añade 1 reloj más a tu carrito y te regalamos una planta cortesía de El Rincón de las Plantas!',
+    'cart_plant_gift_title' => 'Planta de Obsequio (Promo 2+ Relojes)',
+    'cart_plant_gift_free' => '¡GRATIS!',
+    'cart_plant_partner_credit' => 'Cortesía de nuestro aliado El Rincón de las Plantas',
+    'order_gift_plant_heading' => '🌱 Planta de Obsequio Incluida en tu Pedido',
+    'order_gift_plant_desc' => '¡Gracias por comprar 2 o más relojes! Como cortesía de nuestro aliado El Rincón de las Plantas, incluimos esta hermosa planta sin costo adicional:',
+    'order_view_plant_details' => 'Ver cuidados y detalles en la Tienda de Plantas',
 ];
 
