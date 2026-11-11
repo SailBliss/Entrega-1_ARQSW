@@ -18,7 +18,7 @@ class EnsureUserIsAdmin
             return redirect()->guest(route('login'));
         }
 
-        abort_unless($user->isAdmin(), 403, 'No tienes permisos para acceder a esta sección.');
+        abort_unless($user->isAdmin(), 403, __('messages.forbidden'));
 
         return $next($request);
     }

@@ -78,6 +78,12 @@ a {
   min-width: 180px;
 }
 
+@media (min-width: 1200px) {
+  .search-pill input {
+    width: 180px;
+  }
+}
+
 .search-pill button {
   border-radius: 999px;
   border: none;

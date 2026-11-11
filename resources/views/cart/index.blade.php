@@ -2,6 +2,7 @@
 @extends('layouts.app')
 @section('title', $title)
 @section('content')
+@inject('prices', 'App\Services\PriceFormatter')
 <div class="container my-4">
   <h3 class="mb-4"><i class="bi bi-bag me-2"></i>{{ $subtitle }}</h3>
 
@@ -54,9 +55,9 @@
                   <a href="{{ route('watch.show', $item->watch) }}" class="text-reset fw-semibold">{{ $item->watch->name }}</a>
                   <div class="text-muted small">{{ $item->watch->brand }}</div>
                 </td>
-                <td>${{ number_format($item->watch->price, 0, ',', '.') }}</td>
+                <td>{{ $prices->format($item->watch->price) }}</td>
                 <td>{{ $item->quantity }}</td>
-                <td>${{ number_format($item->subtotal(), 0, ',', '.') }}</td>
+                <td>{{ $prices->format($item->subtotal()) }}</td>
                 <td>
                   <form method="POST" action="{{ route('cart.remove', $item->watch) }}">
                     @csrf @method('DELETE')
@@ -103,7 +104,7 @@
           <tfoot>
             <tr>
               <th colspan="3" class="text-end">{{ __('messages.cart_col_total') }}</th>
-              <th id="cart-total">${{ number_format($total, 0, ',', '.') }}</th>
+              <th id="cart-total">{{ $prices->format($total) }}</th>
               <th></th>
             </tr>
           </tfoot>
